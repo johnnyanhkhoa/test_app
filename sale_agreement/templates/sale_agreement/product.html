@@ -1,0 +1,333 @@
+{% extends 'sale_agreement/_Master.html' %}
+{% block title_tab %}Sales app | Product{% endblock %}
+{% load static %}
+{% load humanize %}
+
+{% block main_content %}
+<div class="container-fluid pt-4 px-4">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border:0.5px solid rgb(204, 204, 204);">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'sale_management:product1' 0 %}">Product</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Type filter
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% for category in list_category %}
+                            <li><a class="dropdown-item" href="{% url 'sale_management:product1' category.pk %}">{{ category }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Brand filter
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% for brand in list_brand %}
+                            <li><a class="dropdown-item" href="{% url 'sale_management:product2' brand.pk %}">{{ brand }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+                <div class="btn-group" role="group" style="margin-right: 10px;">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
+                        data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #9b1b14;">
+                        Action
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">Create new</a></li>
+                    </ul>
+                </div>
+                <form method="get" action="{% url 'sale_management:search_product' %}">
+                    <div class="search">
+                        <input type="text" name="product_name" value="{{ product_name }}" placeholder="Search keyword...">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <table class="table bg-light" style="border:0.5px solid rgb(204, 204, 204); margin-top: 10px">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" class="table-dark">Number</th>
+                <th scope="col" class="table-dark">Category</th>
+                <th scope="col" class="table-dark">Code</th>
+                <th scope="col" class="table-dark">Product name on Invoice</th>
+                <th scope="col" class="table-dark"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in products %}
+            <tr>
+                <th scope="row">{{ p.id }}</th>
+                <td>{{ p.product_category }}</td>
+                <td>{{ p.product_brand }}</td>
+                <td><a class="text-dark" href="{% url 'sale_management:product_detail' p.pk %}">{{ p.product_name }}</a></td>
+                <td><div class="dropdown">
+                    <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-tools"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="{% url 'sale_management:product_detail' p.pk %}" ><i class="bi bi-info-square"></i> Product information</a></li>
+                      <li><a class="dropdown-item" href="{% url 'sale_management:product_update' p.pk %}" ><i class="bi bi-pencil-fill"></i> Edit product</a></li>
+                      <li><a class="dropdown-item" href="{% url 'sale_management:product_delete' p.pk %}"><i style = "color: rgb(180, 28, 28);" class="bi bi-trash"></i> Delete product</a></li>
+                    </ul>
+                  </div></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<!-- Pagination Start -->
+<div class="col-md-12">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+
+            {% if products.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ products.previous_page_number }}{% if request.GET.product_name %}&product_name={{ request.GET.product_name }}{% endif %}" tabindex="-1">Trước</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+            {% endif %}
+
+            {% if products.number > 5 %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            {% endif %}
+
+            {% for i in products.paginator.page_range %}
+                {% if i > products.number|add:"-5" %}
+                    {% if i < products.number|add:"5" %}
+                        {% if products.number == i %}
+                            <li class="page-item active">
+                                <a class="page-link" href="?page={{ i }}{% if request.GET.product_name %}&product_name={{ request.GET.product_name }}{% endif %}">{{ i }}</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ i }}{% if request.GET.product_name %}&product_name={{ request.GET.product_name }}{% endif %}">{{ i }}</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {% if products.number < products.paginator.num_pages|add:"-4" %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            {% endif %}
+
+            {% if products.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ products.next_page_number }}{% if request.GET.product_name %}&product_name={{ request.GET.product_name }}{% endif %}">Sau</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            {% endif %}
+
+        </ul>
+    </nav>
+</div>
+
+  
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Product Creation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item text-dark" role="presentation">
+                            <button class="nav-link active fw-bold" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                                type="button" role="tab" aria-controls="home" aria-selected="true" style="color: #9b1b14;">Product Info</button>
+                        </li>
+                        <li class="nav-item text-dark" role="presentation">
+                            <button class="nav-link fw-bold" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                                type="button" role="tab" aria-controls="profile" aria-selected="false" style="color: #9b1b14;">Price</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link fw-bold" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                                type="button" role="tab" aria-controls="contact" aria-selected="false" style="color: #9b1b14;">Registration Information
+                                Info</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="container">
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="product_name" class="form-label fw-bold text-dark">Product name</label>
+                                        {{ form_create_customer.product_name }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="product_name_on_registration_document" class="form-label fw-bold text-dark">Product name on Registration document</label>
+                                        {{ form_create_customer.product_name_on_registration_document }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="product_code" class="form-label fw-bold text-dark" >Product Code</label>
+                                        {{ form_create_customer.product_code }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="product_type" class="form-label fw-bold text-dark" >Product Type</label>
+                                        {{ form_create_customer.product_type }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="product_unit" class="form-label fw-bold text-dark" >Product Unit</label>
+                                        {{ form_create_customer.product_unit }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="packing_size" class="form-label fw-bold text-dark" >Packing Size</label>
+                                        {{ form_create_customer.packing_size }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="product_category" class="form-label fw-bold text-dark" >Product Category</label>
+                                        {{ form_create_customer.product_category }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="product_Brand" class="form-label fw-bold text-dark" >Product Brand</label>
+                                        {{ form_create_customer.product_brand }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="manufacture" class="form-label fw-bold text-dark" >Manufacture</label>
+                                        {{ form_create_customer.manufacture }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="manufacturing_country" class="form-label fw-bold text-dark" >Manufacturing Country</label>
+                                        {{ form_create_customer.manufacturing_country }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="intended_use" class="form-label fw-bold text-dark" >Intended Use</label>
+                                        {{ form_create_customer.intended_use }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="ingredient_list" class="form-label fw-bold text-dark" >Ingredient List</label>
+                                        {{ form_create_customer.ingredient_list }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="expiry_date" class="form-label fw-bold text-dark" >Shelf Life</label>
+                                        <br>
+                                        {{ form_create_customer.expiry_date }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="product_remark" class="form-label fw-bold text-dark" >Product Remark</label>
+                                        {{ form_create_customer.product_remark }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="container">
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="vat" class="form-label fw-bold text-dark" >VAT</label>
+                                        {{ form_create_customer.vat }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="retail_selling_price_wo_vat" class="form-label fw-bold text-dark" >Retail Selling Price Wo VAT</label>
+                                        {{ form_create_customer.retail_selling_price_wo_vat }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="retail_selling_price_vat" class="form-label fw-bold text-dark" >Retail Selling Price VAT</label>
+                                        {{ form_create_customer.retail_selling_price_vat }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="selling_price_distributor_wo_vat" class="form-label fw-bold text-dark" >Selling Price Distributor Wo VAT</label>
+                                        {{ form_create_customer.selling_price_distributor_wo_vat }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="selling_price_distributor_vat" class="form-label fw-bold text-dark" >Selling Price Distributor VAT</label>
+                                        {{ form_create_customer.selling_price_distributor_vat }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="selling_price_etc_wo_vat" class="form-label fw-bold text-dark" >Selling Price ETC Wo VAT</label>
+                                        {{ form_create_customer.selling_price_etc_wo_vat }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="selling_price_etc_vat" class="form-label fw-bold text-dark" >Selling Price ETC VAT</label>
+                                        {{ form_create_customer.selling_price_etc_vat }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="selling_price_otc_wo_vat" class="form-label fw-bold text-dark" >Selling Price OTC Wo VAT</label>
+                                        {{ form_create_customer.selling_price_otc_wo_vat }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="selling_price_otc_vat" class="form-label fw-bold text-dark" >Selling Price OTC VAT</label>
+                                        {{ form_create_customer.selling_price_otc_vat }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                            <div class="container">
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="registraion_approval_date" class="form-label fw-bold text-dark" >Registration Approval Date</label>
+                                        <br>
+                                        {{ form_create_customer.registraion_approval_date }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="registraion_expiry_date" class="form-label fw-bold text-dark" >Registration Expiry Date</label>
+                                        <br>
+                                        {{ form_create_customer.registraion_expiry_date }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="registraion_reference" class="form-label fw-bold text-dark" >Registration Reference</label>
+                                        {{ form_create_customer.registraion_reference }}
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn text-white" name="btnproductinput" value="Product input" style="background-color: #9b1b14;">Create
+                    product</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'sale_agreement/_Master.html' %}
+{% block title_tab %}Sales app | Quotation Update{% endblock %}
+{% load static %}
+{% comment %} {% load humanize %} {% endcomment %}
+
+{% block main_content %}
+<h5 class="title" style="text-align: center; margin-top:20px">Quotation edit</h5>
+<form method="post">
+    {% csrf_token %}
+    <div class="row align-items-start" style="margin-top: 10px;">
+        <div class="col">
+            <label for="quotation_no" class="col-form-label fw-bold text-dark">Quotation Number</label>
+            {{ form_update_quotation.quotation_no }}
+        </div>
+    </div>
+    <div class="row align-items-start" style="margin-top: 10px;">
+        <div class="col">
+            <label for="customer_id" class="col-form-label fw-bold text-dark">Customer</label>
+            {{ form_update_quotation.customer_id }}
+        </div>
+    </div>
+    <div class="row align-items-start" style="margin-top: 10px;">
+        <div class="col">
+            <label for="quotation_date" class="col-form-label fw-bold text-dark">Quotation Date</label>
+            {{ form_update_quotation.quotation_date }}
+        </div>
+    </div>
+    <div class="row align-items-start" style="margin-top: 10px;">
+        <div class="col">
+            <label for="quotation_remark" class="col-form-label fw-bold text-dark">Quotation Remark</label>
+            {{ form_update_quotation.quotation_remark }}
+        </div>
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end"
+        style="margin-top: 20px; margin-bottom: 20px; margin-right: 20px">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" name="btnquotationupdate" value="Quotation update"
+            style="background-color: #9b1b14;">Update quotation</button>
+    </div>
+</form>
+<!-- Form End -->
+{% endblock %}

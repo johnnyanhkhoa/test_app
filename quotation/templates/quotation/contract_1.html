@@ -1,0 +1,448 @@
+{% extends 'sale_agreement/_Master.html' %}
+{% block title_tab %}Sales app | Contract{% endblock %}
+{% load static %}
+{% load humanize %}
+
+{% block main_content %}
+<!-- Form Start -->
+<br>
+<div class="container-fluid pt-4 px-4" style="line-height: 1.5;">
+    <div class="container-fluid bg-light text-dark">
+        <div class="row justify-content-center">
+            CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM
+        </div>
+        <div class="row justify-content-center">
+            SOCIALIST REPUBLIC OF VIETNAM
+        </div>
+        <div class="row justify-content-center">
+            Độc lập – Tự do – Hạnh Phúc
+        </div>
+        <div class="row justify-content-center">
+            Independence – Freedom - Happines
+        </div>
+        <div class="row justify-content-center">
+            ---------***---------
+        </div>
+        <br>
+        <div class="row justify-content-center">
+            HỢP ĐỒNG MUA BÁN HÀNG HOÁ
+        </div>
+        <div class="row justify-content-center">
+            SALE AND PURCHASE CONTRACT
+        </div>
+        <div class="row justify-content-center">
+            Số/ No: … / 20…..-JV
+        </div>
+        <br>
+        <div class="row justify-content-start">
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                Hợp đồng này làm tại Thành phố Hồ Chí Minh, ngày …… tháng ….. năm …….
+                <br>
+                Made in Ho Chi Minh City, on
+            </div>
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                -&emsp;Căn cứ vào Luật Thương Mại số 36/2005/QH11 ngày 14/06/2005 của Quốc Hội và các Nghị định, Thông tư và văn bản hướng dẫn thi hành Luật Thương mại.
+            </div>
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                &nbsp;Based on the Commercial Law No 36/2005/QH11 promulgated by National Assembly on 14/06/2005 and the Degrees, Circulars and other legal documents providing guidance for the implementation of the Commercial Law.
+            </div>   
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                -&emsp;Căn cứ vào thương lượng của hai bên.
+            </div>
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                &nbsp;Based on the negotiation between 2 parties.
+            </div>                  
+        </div>
+        <br>
+        <div class="row justify-content-start">
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                BÊN A (Bên Bán)&emsp;&nbsp;: CÔNG TY CỔ PHẦN DƯỢC PHẨM TEDIS-VIỆT HÀ
+            </div>
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                PARTY A (The Seller)&emsp;&nbsp;: TEDIS-VIET HA PHARMACEUTICAL JOINT STOCK COMPANY
+            </div>
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                &emsp;&ensp;Địa chỉ / Address&emsp;&nbsp;: Lô F.2B Đường số 2, Khu công nghiệp Long Hậu, xã Long Hậu, Huyện Cần Giuộc, Tỉnh Long An, Việt Nam.
+            </div>   
+            <div class="row justify-content-between" style="line-height: 1.5;">
+                &emsp;&ensp;Điện thoại / Tel&emsp;&nbsp;: 028 3873 4205&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Fax: 028 3873 4207
+            </div>
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                &emsp;&ensp;Mã số thuế / Tax No.&emsp;&nbsp;: 1101247615
+            </div>
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                &emsp;&ensp;Tài khoản số&emsp;&nbsp;: 0181.003.223.386 VND tại Ngân hàng Vietcombank – CN Nam Sài Gòn
+                <br>
+                &emsp;&ensp;Account No.
+            </div>
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                &emsp;&ensp;Đại diện bởi&emsp;&nbsp;: TÔ NGỌC CHI LAN&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Chức vụ: Kế Toán Trưởng
+            </div>
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                &emsp;&ensp;Represented by
+            </div>
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                (Theo Giấy ủy quyền số 15/2021-TDVH ngày 30 tháng 12 năm 2020 của bà EDGARD-ROSA SÉVERINE. – Đại diện theo pháp luật của Công ty)
+            </div>                   
+        </div>
+        <br>
+        <div class="row justify-content-start">
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                BÊN B (Bên mua)&emsp;&nbsp;: CÔNG TY CỔ PHẦN DƯỢC PHẨM TEDIS-VIỆT HÀ
+            </div>
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                PARTY B(The Buyer)&emsp;&nbsp;: TEDIS-VIET HA PHARMACEUTICAL JOINT STOCK COMPANY
+            </div>
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                &emsp;&ensp;Địa chỉ / Address&emsp;&nbsp;: Lô F.2B Đường số 2, Khu công nghiệp Long Hậu, xã Long Hậu, Huyện Cần Giuộc, Tỉnh Long An, Việt Nam.
+            </div>   
+            <div class="row justify-content-between" style="line-height: 1.5;">
+                &emsp;&ensp;Điện thoại / Tel&emsp;&nbsp;: 028 3873 4205&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Fax: 028 3873 4207
+            </div>
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                &emsp;&ensp;Mã số thuế / Tax No.&emsp;&nbsp;: 1101247615
+            </div>
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                &emsp;&ensp;Tài khoản số&emsp;&nbsp;: 0181.003.223.386 VND tại Ngân hàng Vietcombank – CN Nam Sài Gòn
+                <br>
+                &emsp;&ensp;Account No.
+            </div>
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                &emsp;&ensp;Đại diện bởi&emsp;&nbsp;: TÔ NGỌC CHI LAN&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Chức vụ: Kế Toán Trưởng
+            </div>
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                &emsp;&ensp;Represented by
+            </div>
+            <br>
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                Sau khi thỏa thuận, hai bên đồng ý ký kết hợp đồng mua bán với các điều khoản như sau:
+            </div>
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                After discussion, both parties agreed to sign the sale and purchase contract under the following terms and conditions:
+            </div>                   
+        </div>
+        <br>
+        <div class="row justify-content-start">
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                Điều 1/ Article 1:  Hàng Hóa / Goods
+                <br>
+                1.1 Trong thời gian hợp đồng có hiệu lực, Bên bán - ……………….. đồng ý cung cấp hàng hóa cho bên 
+                <br>
+                &emsp;&ensp;&nbsp;mua ………………………. đảm bảo theo từng đơn đặt hàng cụ thể. Chi tiết hàng hóa, số lượng giao 
+                <br>
+                &emsp;&ensp;&nbsp;hàng và các điều khoản khác nếu có bổ sung sẽ được chỉ rõ trong đơn đặt hàng hoặc trong phụ kiện
+                <br>
+                &emsp;&ensp;&nbsp;bổ sung của từng thời kỳ. Chi tiết hàng hóa, đơn giá được liệt kê như sau:
+            </div>
+            <br>
+            <div class="row justify-content-start" style="line-height: 1.5;">
+                Điều 1/ Article 1:  Hàng Hóa / Goods
+                <br>
+                &emsp;&ensp;&nbsp;During the valid duration of the Contract, The Seller - TEDIS – VIET HA PHARMACEUTICAL  
+                <br>
+                &emsp;&ensp;&nbsp;JOINT STOCK COMPANY agrees to supply goods the Buyer - ……………………….. based on each 
+                <br>
+                &emsp;&ensp;&nbsp;specific sales order. Details of goods, quantities or other items will be supplement specified in the
+                <br>
+                &emsp;&ensp;&nbsp;sales order or the annex of each period. The goods in detail listing as bellowing:
+            </div>
+        </div>
+        <br>
+        <table class="table table-bordered border-dark">
+            <thead>
+            <tr>
+            <th scope="col">STT</th>
+            <th scope="col">SỐ LƯỢNG</th>
+            <th scope="col">SỐ LƯỢNG</th>
+            <th scope="col">SỐ LƯỢNG</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <th scope="col">SỐ LƯỢNG</th>
+                <th scope="col">SỐ LƯỢNG</th>
+                <th scope="col">SỐ LƯỢNG</th>
+            </tr>
+            <tr>
+                <th scope="row">1</th>
+                <th scope="col">SỐ LƯỢNG</th>
+                <th scope="col">SỐ LƯỢNG</th>
+                <th scope="col">SỐ LƯỢNG</th>
+            </tr>
+            <tr>
+                <th scope="row">1</th>
+                <th scope="col">SỐ LƯỢNG</th>
+                <th scope="col">SỐ LƯỢNG</th>
+                <th scope="col">SỐ LƯỢNG</th>
+            </tr>       
+            </tbody>
+        </table>
+        <div class="row justify-content-start" style="line-height: 1.5;">
+            1.2 Bên mua sẽ gửi đơn đặt hàng cho Bên bán bằng văn bản, email trong vòng 03 ngày trước khi xuất 
+            <br>
+            &emsp;&ensp;&nbsp;hàng. Nếu không có sự dồng ý của Bên bán thì bên mua không được từ chối nhận hàng sau khi đã gởi  
+            <br>
+            &emsp;&ensp;&nbsp;đơn đặt hàng 
+            <br>
+            &emsp;&ensp;&nbsp;The Buyer will place written orders to The Seller by paper,email within 03 days before the delivery
+            <br>
+            &emsp;&ensp;&nbsp;The Buyer is not allowed to decline the reception of the goods without acceptance of The Seller
+        </div>
+        <br>
+        <div class="row justify-content-start" style="line-height: 1.5;">
+            Điều 2/ Article 2: Chất lượng hàng hoá/ Quality
+            <br>
+            2.1 Sản phẩm đã được Cục Quản lý Dược – Bộ Y tế cấp phiếu công bố mỹ phẩm.
+            <br>
+            &emsp;&ensp;&nbsp;The Products have been approved and granted the notification of cosmetic product by Drug  
+            <br>
+            &emsp;&ensp;&nbsp;Administration of Vietnam – Ministry of Health 
+            <br>
+            &emsp;&ensp;&nbsp;specific sales order. Details of goods, quantities or other items will be supplement specified in the
+            <br>
+            &emsp;&ensp;&nbsp;sales order or the annex of each period. The goods in detail listing as bellowing:
+        </div>
+        <br>
+        <div class="row justify-content-start" style="line-height: 1.5;">
+            Điều 4/ Article 4: Phương thức thanh toán / Payment items
+            <br>
+            4.1 Phương thức thanh toán: Bên B thực hiện việc thanh toán bằng chuyển khoản bằng tiền đồng Việt 
+            <br>
+            &emsp;&ensp;&nbsp;Amount Due must be paid by bank transfer by Party B to Party A within 30 days from the Invoice  
+            <br>
+            &emsp;&ensp;&nbsp;Date.
+            <br> 
+            <!-- tạo table ở thông tin tài khoản để auto spacing -->
+            &emsp;&ensp;&nbsp;&#x2022;&emsp;Thông tin tài khoản&emsp;&nbsp;: CÔNG TY CỔ PHẦN DƯỢC PHẨM TEDIS-VIỆT HÀ
+            <br>
+            &emsp;&ensp;&nbsp;&emsp;&nbsp;Account Information
+            <br>
+            &emsp;&ensp;&nbsp;&#x2022;&emsp;Tài khoản số/ Account No.&emsp;&nbsp;: 0181003223386 VND
+            <br>
+            &emsp;&ensp;&nbsp;&#x2022;&emsp;Ngân hàng/ Bank&emsp;&nbsp;: VCB – Chi Nhánh Nam Sài Gòn
+            <br>
+            4.2 Phạt chậm thanh toán:
+            <br>
+            &emsp;&ensp;&nbsp;&#x2022;&emsp;Nếu Bên B chưa thanh toán tiền mua hàng hoặc thanh toán không đủ số tiền trên hóa đơn cho Bên
+            <br>
+            &emsp;&ensp;&nbsp;&emsp;&nbsp;A trong thời hạn được nêu tại mục 4.1, thì số tiền quá hạn sẽ phải chịu lãi suất do chậm thanh
+            <br>
+            &emsp;&ensp;&nbsp;&emsp;&nbsp;toán bằng 1,50% mỗi tháng. Tiền lãi do chậm thanh toán này sẽ phải thanh toán vào ngày đầu của
+            <br>
+            &emsp;&ensp;&nbsp;&emsp;&nbsp;mỗi tháng. Bất kỳ khoản thanh toán nào của Bên B trước tiên sẽ được dùng để khấu trừ khoản
+            <br>
+            &emsp;&ensp;&nbsp;&emsp;&nbsp;tiền lãi do chậm thanh toán nếu có và sau đó số tiền còn lại sẽ được dùng để thanh toán cho các
+            <br>
+            &emsp;&ensp;&nbsp;&emsp;&nbsp;khoản tiền phải trả khác của Bên B cho Bên A.
+            <br>
+            &emsp;&ensp;&nbsp;&#x2022;&emsp;Trong từng trường hợp chưa thanh toán cụ thể bên A sẽ tạm thời ngưng cung cấp hàng hóa và tiến
+            <br>
+            &emsp;&ensp;&nbsp;&emsp;&nbsp;hành các biện pháp phù hợp cho tới khi việc thanh toán công nợ được thực hiện đầy đủ
+            <br>
+            &emsp;&ensp;&nbsp;&emsp;&nbsp;Penalty of the late payment:
+            <br>
+            &emsp;&ensp;&nbsp;&#x2022;&emsp;If the time of payment is overdue, the party B fail to pay any amount owing to Party A or pay only
+            <br>
+            &emsp;&ensp;&nbsp;&emsp;&nbsp;a partial invoice within the deadline specified in Article 4.1 above, late payment interest shall
+            <br>
+            &emsp;&ensp;&nbsp;&emsp;&nbsp;apply on the overdue amount at a rate equal to 1.50% per month. Such late payment interest shall 
+            <br>
+            &emsp;&ensp;&nbsp;&emsp;&nbsp;become payable on the first day of each calendar month. Any amount paid by Party B shall be
+            <br>
+            &emsp;&ensp;&nbsp;&emsp;&nbsp;firstly used to reimburse such late payment interest, if applicable, and then after, if there is any 
+            <br>
+            &emsp;&ensp;&nbsp;&emsp;&nbsp;remaining amount, such remaining amount will be used to pay any other amounts otherwise
+            <br>
+            &emsp;&ensp;&nbsp;&emsp;&nbsp;owned by Party B to Party A
+            <br>
+            &emsp;&ensp;&nbsp;&#x2022;&emsp;Case by case, party A can temporarily stop the supply and take appropriate legal measures until
+            <br>
+            &emsp;&ensp;&nbsp;&emsp;&nbsp;the overdue debt is fully paid.
+            <br>
+            4.3 Tất cả các phí ngân hàng phát sinh do chuyển khoản sẽ được tính vào Bên B.
+            <br>
+            &emsp;&ensp;&nbsp;All the bank charges generated from any bank transfer will be borne by Party B.
+        </div>
+        <div class="row justify-content-start" style="line-height: 1.5;">
+            Điều 5/ Article 5: Giao nhận – Chứng từ / Delivery – Documents
+            <br>
+            5.1 Việc giao nhận được tiến hành từng đơn đặt hàng. 
+            <br>
+            &emsp;&ensp;&nbsp;The delivery will be follow each order.
+            <br>
+            5.2 Sản phẩm sẽ được giao nhận tại kho của Bên B trong vòng ba (03) ngày làm việc kể từ ngày xuất hoá
+            <br>
+            &emsp;&ensp;&nbsp;đơn. Trường hợp Bên B không thể nhận Sản phẩm theo ngày giao nhận đã thoả thuận thì phải thông
+            <br>
+            &emsp;&ensp;&nbsp;báo lý do bằng văn bản cho Bên A.
+            <br>
+            &emsp;&ensp;&nbsp;Products shall be delivered at Party B’s warehouse within three (3) business day from the Invoice
+            <br>
+            &emsp;&ensp;&nbsp;Date. If Party B is unable to take delivery of the Products upon the agreed delivery date, it shall 
+            <br>
+            &emsp;&ensp;&nbsp;inform Party A by writing of the reasons thereof.
+            <br>
+            5.3 Quyền sở hữu Sản phẩm sẽ chuyển giao cho Bên B ngay khi Bên A đã được thanh toán đầy đủ giá trị
+            <br>
+            &emsp;&ensp;&nbsp;Sản phẩm. Khi đã giao nhận Sản phẩm, những rủi ro về Sản phẩm cũng sẽ được chuyển cho Bên B.
+            <br>
+            &emsp;&ensp;&nbsp;Title to the Products shall pass to Party B upon full payment of the price of the Products to Party A. 
+            <br>
+            &emsp;&ensp;&nbsp;Transfer of the risks in the Products shall pass onto Party B upon delivery of the Products.
+            <br>
+            5.4 Chứng từ Bên A cung cấp cho từng lần giao hàng / Document required from Party A for each
+            <br>
+            &emsp;&ensp;&nbsp;delivery:
+            <br>
+            &emsp;&ensp;&nbsp;&#x2022;&emsp;1/3 Biên bản giao nhận Sản phẩm (bản gốc) / Original Products Handover Minutes
+            <br>
+            &emsp;&ensp;&nbsp;&#x2022;&emsp;1/3 hoá đơn giá trị gia tăng (bản gốc)/ Original VAT invoice
+        </div>
+        <div class="row justify-content-start" style="line-height: 1.5;">
+            Điều 6/ Article 6: Bảo quản – Bảo hiểm / Storage - Insurance
+            <br>
+            6.1 Bên B chịu trách nhiệm bảo quản Sản phẩm theo đúng hướng dẫn được ghi trên bao bì Sản phẩm 
+            <br>
+            &emsp;&ensp;&nbsp;và/hoặc trong tờ hướng dẫn sử dụng và theo đúng các hướng dẫn của cơ quan quản lý đối với mỹ
+            <br>
+            &emsp;&ensp;&nbsp;phẩm nếu có.
+            <br>
+            &emsp;&ensp;&nbsp;Party B is responsible to store the Products upon the delivery of the Products in accordance with any
+            <br>
+            &emsp;&ensp;&nbsp;requirement indicated on the packaging of the Products and/or the leaflet of the Products and in
+            <br>
+            &emsp;&ensp;&nbsp;accordance with the required regulations issued by the relevant competent authorities applicable to
+            <br>
+            &emsp;&ensp;&nbsp;cosmetic products if any.
+            <br>
+            6.2 Bên B sẽ mua bảo hiểm tương ứng cần thiết cho Sản phẩm.
+            <br>
+            &emsp;&ensp;&nbsp;Party B shall subscribe adequate insurance coverage necessary in this respect.
+            <br>
+            6.3 Bất kỳ sự khác biệt về chất lượng so với với các điều khoản đặt hàng của Bên B (đã được Bên A chấp 
+            <br>
+            &emsp;&ensp;&nbsp;thuận), sẽ được Bên B thông báo bằng văn bản cho Bên A trong vòng tối đa mười (10) ngày làm việc
+            <br>
+            &emsp;&ensp;&nbsp;kể từ ngày nhận Sản phẩm như đã ghi trên Biên bản giao nhận Sản phẩm được ký bởi cả hai bên, nếu 
+            <br>
+            &emsp;&ensp;&nbsp;không Sản phẩm được coi là phù hợp với đơn hàng của Bên B và tiêu chuẩn chất lượng Sản phẩm.
+            <br>
+            &emsp;&ensp;&nbsp;Nếu vấn đề chất lượng thuộc lỗi Bên A, bằng chi phí của mình Bên A sẽ thay thế Sản phẩm hư hỏng,
+            <br>
+            &emsp;&ensp;&nbsp;khiếm khuyết trong vòng mười (10) ngày sau khi nhận được văn bản thông báo của Bên B., Bất kỳ
+            <br>
+            &emsp;&ensp;&nbsp;khiếu nại về chất lượng mà không liên quan đến việc bảo quản Sản phẩm sau thời gian nêu trên cho
+            <br>
+            &emsp;&ensp;&nbsp;đến khi hết hạn sử dụng của Sản phẩm sẽ được Bên B thông báo bằng văn bản cho Bên A ngay khi 
+            <br>
+            &emsp;&ensp;&nbsp;xảy ra và các biện pháp khắc phục nếu có sẽ được thông báo cho Bên B ngay khi Bên A nhận được 
+            <br>
+            &emsp;&ensp;&nbsp;những phản hồi từ phía nhà sản xuất.
+            <br>
+            &emsp;&ensp;&nbsp;Any Product quality discrepancy against the terms of Party B’s order (as approved by Party A), shall
+            <br>
+            &emsp;&ensp;&nbsp;be notified in writing by Party B to Party A within a maximum of ten (10) business days after delivery
+            <br>
+            &emsp;&ensp;&nbsp;of the Products as mentioned on the Product Handover Minutes duly signed and dated by both 
+            <br>
+            &emsp;&ensp;&nbsp;Parties, failing which the Products shall be deemed to conform to Party B’s order and their 
+            <br>
+            &emsp;&ensp;&nbsp;specifications. If the quality failure is acknowledged by Party A, Party A shall at its own expense, 
+            <br>
+            &emsp;&ensp;&nbsp;supply replace the damaged, defective Products within ten (10) days after receipt of Party B’s written 
+            <br>
+            &emsp;&ensp;&nbsp;notification. Any quality complain without involving about the storage of Product after above
+            <br>
+            &emsp;&ensp;&nbsp;mentioned timing to the expiry of Product shall be notified in writing as soon as it happened by Party 
+            <br>
+            &emsp;&ensp;&nbsp;B to Party A and the remedies if any shall be informed to Party B by Party A after receipt of the 
+            <br>
+            &emsp;&ensp;&nbsp;manufacturer’ feedbacks. 
+        </div>
+        <div class="row justify-content-start" style="line-height: 1.5;">
+            Điều 7/ Article 7: Cam kết chung/ General
+            <br>
+            7.1 Mọi tranh chấp liên quan đến hợp đồng mua bán mà không giải quyết bằng sự hòa giải sẽ được gửi
+            <br>
+            &emsp;&ensp;&nbsp;đến Trung tâm trọng tài quốc tế Việt Nam (VIAC) để chờ phân giải cuối cùng theo các quy luật phân 
+            <br>
+            &emsp;&ensp;&nbsp;xử của VIAC. Nơi phân xử sẽ tại Thành phố Hồ Chí Minh và ngôn ngữ sử dụng sẽ là tiếng Anh.
+            <br>
+            &emsp;&ensp;&nbsp;Any dispute in relation to the contract that is not settled by amicable agreement will be submitted to 
+            <br>
+            &emsp;&ensp;&nbsp;the Vietnam International Arbitration Centre (“VIAC”) for recourse final resolution in accordance 
+            <br>
+            &emsp;&ensp;&nbsp;with the applicable arbitration rules of VIAC. Seat of the arbitration shall be Ho Chi Minh City and 
+            <br>
+            &emsp;&ensp;&nbsp;language for the arbitration shall be English.
+            <br>
+            7.2 Chi phí hợp pháp, chi phí toà án và các chi phí khác mà một bên phải gánh chịu trong quá trình tranh 
+            <br>
+            &emsp;&ensp;&nbsp;chấp sẽ được phân chia cho các bên theo quyết định của toà án phân xử .
+            <br>
+            &emsp;&ensp;&nbsp;The cost of legal fees, court fees and other expenses that a party has incurred in the dispute shall be
+            <br>
+            &emsp;&ensp;&nbsp;allocated pursuant to the decision issued by the arbitral tribunal.
+            <br>
+            7.3 Bất kỳ sự thay đổi hay sửa đổi bổ sung các điều khoản của hợp đồng sẽ được ghi bằng văn bản và 
+            <br>
+            &emsp;&ensp;&nbsp;phải có sự đồng ý của cả hai bên.
+            <br>
+            &emsp;&ensp;&nbsp;Any change or amendment to the terms of the contract shall be made by writing and subject to both 
+            <br>
+            &emsp;&ensp;&nbsp;parties agreement.
+        </div>
+        <div class="row justify-content-start" style="line-height: 1.5;">
+            Điều 8/ Article 8: Hiệu lực của hợp đồng / Validity
+            <br>
+            8.1 Hợp đồng này có hiệu lực  từ ngày ………… đến ngày ………
+            <br>
+            &emsp;&ensp;&nbsp;This contract is valid from ……... to ………
+            <br>
+            8.2	Hợp đồng này sẽ tự động được thanh lý khi các điều khoản của hợp đồng hết hạn theo điều 8.1
+            <br>
+            &emsp;&ensp;&nbsp;This contract will be liquidated automatically when the terms of the contract expires according the 
+            <br>
+            &emsp;&ensp;&nbsp;article 8.1 
+            <br>
+            8.3	Nếu sau thời hạn hợp đồng mà hai bên muốn tiếp tục quan hệ mua bán theo điều khoản đã thỏa thuận
+            <br>
+            &emsp;&ensp;&nbsp;thì có thể lập phụ lục để gia hạn hợp đồng này, trừ trường hợp hai bên có thỏa thuận khác.
+            <br>
+            &emsp;&ensp;&nbsp;If after the valid duration the two parties want to continue the trading relationship as per the agreed 
+            <br>
+            &emsp;&ensp;&nbsp;articles an appendix may be made to extend this contract,, unless both parties agree otherwise.
+            <br>
+            8.4	Hợp đồng này được lập thành 02 (hai) bản có giá trị như nhau, mỗi bên giữ 01 (một) bản.
+            <br>
+            &emsp;&ensp;&nbsp;
+        </div>
+        <table class="table table-borderless" style="text-align: center;">
+            <tbody>
+              <tr>
+                <td>ĐẠI DIỆN BÊN BÁN</td>
+                <td>ĐẠI DIỆN BÊN MUA</td>
+              </tr>
+              <tr>
+                <td>FOR THE SELLER</td>
+                <td>FOR THE BUYER</td>
+              </tr>
+              <tr>
+                <td><br><br><br></td>
+                <td><br></td>
+              </tr>
+              <tr>
+                <td>TÔ NGỌC CHI LAN</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Kế Toán Trưởng/ Chief Accountant</td>
+                <td></td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- Form End -->
+{% endblock %}

@@ -1,0 +1,194 @@
+{% extends 'sale_agreement/_Master.html' %}
+{% block title_tab %}Sales app | Quotation List{% endblock %}
+{% load static %}
+{% load humanize %}
+
+{% block main_content %}
+<div class="container-fluid pt-4 px-4">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border:0.5px solid rgb(204, 204, 204);">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'quotation:quotation_list_channel' 0 %}">Quotation</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Channel Filter
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% for channel in list_channel %}
+                            <li><a class="dropdown-item" href="{% url 'quotation:quotation_list_channel' channel.pk %}">{{ channel }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Status Filter
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% for status in list_status %}
+                            <li><a class="dropdown-item" href="{% url 'quotation:quotation_list_status' status.pk %}">{{ status }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+                <div class="btn-group" role="group" style="margin-right: 10px;">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Action
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <li><a href="" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#createquotationModal"><i class="bi bi-file-earmark-plus"></i> Create quotation</a></li>
+                    </ul>
+                </div>
+                <form method="get" action="{% url 'quotation:search_quotation' %}">
+                    <div class="search">
+                        <input type="text" name="quotation_no" value="{{ quotation_no }}" placeholder="Search quotation number...">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <table class="table bg-light" style="border:0.5px solid rgb(204, 204, 204); margin-top: 10px">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" class="table-dark">Number</th>
+                <th scope="col" class="table-dark">Quotation Number</th>
+                <th scope="col" class="table-dark">Customer</th>
+                <th scope="col" class="table-dark">Channel</th>
+                <th scope="col" class="table-dark">Date</th>
+                <th scope="col" class="table-dark">Status</th>
+                <th scope="col" class="table-dark">Remark</th>
+                <th scope="col" class="table-dark"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for q in quotations %}
+            <tr>
+                <th scope="row">{{ q.id }}</th>
+                <td>{{ q.quotation_no }}</td>
+                <td class="text-dark">{{ q.customer_id }}</td>
+                <td>{{ q.customer_id.channel }}</td>
+                <td>{{ q.quotation_date }}</td>
+                <td>{{ q.quotation_status }}</td>
+                <td>{{ q.quotation_remark }}</td>
+                <td><div class="dropdown">
+                    <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-tools"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li><a class="dropdown-item" href="{% url 'quotation:quotation_product_input' q.pk %}"><i class="bi bi-plus-square"></i> Add product to quotation</a></li>
+                      <li><a class="dropdown-item" href="{% url 'quotation:final_quotation' q.pk %}"><i class="bi bi-binoculars"></i> View quotation</a></li>
+                      <li><a class="dropdown-item" href="{% url 'quotation:html_to_pdf_view' q.pk %}"><i class="bi bi-file-earmark-arrow-down"></i> Print PDF</a></li>
+                      <li><a class="dropdown-item" href="{% url 'quotation:quotation_update' q.pk %}"><i class="bi bi-pencil-fill"></i> Edit Quotation</a></li>
+                      <li><a class="dropdown-item" href="{% url 'quotation:quotation_follow_up' q.pk %}"><i class="bi bi-calendar-check"></i> Quotation follow up</a></li>
+                      <li><a class="dropdown-item" href="{% url 'quotation:quotation_delete' q.pk %}"><i style = "color: rgb(180, 28, 28);" class="bi bi-trash"></i> Delete quotation</a></li>
+                    </ul>
+                  </div></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<!-- Pagination Start -->
+<div class="col-md-12">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+
+            {% if quotations.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ quotations.previous_page_number }}{% if request.GET.quotation_no %}&quotation_no={{ request.GET.quotation_no }}{% endif %}" tabindex="-1">Previous</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+            {% endif %}
+
+            {% if quotations.number > 5 %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            {% endif %}
+
+            {% for i in quotations.paginator.page_range %}
+                {% if i > quotations.number|add:"-5" %}
+                    {% if i < quotations.number|add:"5" %}
+                        {% if quotations.number == i %}
+                            <li class="page-item active">
+                                <a class="page-link" href="?page={{ i }}{% if request.GET.quotation_no %}&quotation_no={{ request.GET.quotation_no }}{% endif %}">{{ i }}</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ i }}{% if request.GET.quotation_no %}&quotation_no={{ request.GET.quotation_no }}{% endif %}">{{ i }}</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {% if quotations.number < quotations.paginator.num_pages|add:"-4" %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            {% endif %}
+
+            {% if quotations.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ quotations.next_page_number }}{% if request.GET.quotation_no %}&quotation_no={{ request.GET.quotation_no }}{% endif %}">Next</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            {% endif %}
+
+        </ul>
+    </nav>
+</div>
+
+
+<!-- Modals -->
+
+<!-- Create Quotation Modal -->
+<div class="modal fade" id="createquotationModal" tabindex="-1" aria-labelledby="createquotationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div id="addQuotation" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createquotationModalLabel">New quotation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="post">
+              {% csrf_token %}
+              <div class="mb-3">
+                  <label for="quotation_no" class="col-form-label">Quotation Number</label>
+                  {{ form.quotation_no }}
+              </div>
+              <div class="mb-3">
+                  <label for="customer_id" class="col-form-label">Customer</label>
+                  {{ form.customer_id }}
+              </div>
+              <div class="mb-3">
+                  <label for="quotation_date" class="col-form-label">Quotation Date</label>
+                  {{ form.quotation_date }}
+              </div>
+              <div class="mb-3">
+                  <label for="quotation_remark" class="col-form-label">Quotation Remark</label>
+                  {{ form.quotation_remark }}
+              </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary" name="btnquotationinput" value="Quotation input">Create new
+                      quotation</button>
+              </div>
+          </form>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}

@@ -1,0 +1,325 @@
+{% extends 'sale_agreement/_Master.html' %}
+{% block title_tab %}Sales app | Khách hàng{% endblock %}
+{% load static %}
+
+{% block main_content %}
+<div class="container-fluid pt-4 px-4">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border:0.5px solid rgb(204, 204, 204);">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold text-dark" href="{% url 'sale_management:customer_channel_filter' 0 %}">Customer</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Channel filter
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% for channel in list_channel %}
+                            <li><a class="dropdown-item" href="{% url 'sale_management:customer_channel_filter' channel.pk %}">{{ channel }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Type filter
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% for type in list_type %}
+                            <li><a class="dropdown-item" href="{% url 'sale_management:customer_type_filter' type.pk %}">{{ type }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Sale Area filter
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% for sale_area in list_sale_area %}
+                            <li><a class="dropdown-item" href="{% url 'sale_management:customer_salearea_filter' sale_area.pk %}">{{ sale_area }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Province filter
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% for province in list_province %}
+                            <li><a class="dropdown-item" href="{% url 'sale_management:customer_province_filter' province.pk %}">{{ province }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+                <div class="btn-group" role="group" style="margin-right: 10px;">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Action
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#create_customer_Modal">Create new</a></li></li>
+                    </ul>
+                </div>
+                <form method="get" action="{% url 'sale_management:search_customer' %}">
+                    <div class="search">
+                        <input type="text" name="customer_name" value="{{ customer_name }}" placeholder="Search keyword...">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <table class="table bg-light" style="border:0.5px solid rgb(204, 204, 204); margin-top: 10px">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" class="table-dark">Number</th>
+                <th scope="col" class="table-dark">Customer code</th>
+                <th scope="col" class="table-dark">Customer name</th>
+                <th scope="col" class="table-dark">Legal name</th>
+                <th scope="col" class="table-dark">Customer address</th>
+                <th scope="col" class="table-dark"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in customers %}
+            <tr>
+                <th scope="row">{{ c.id }}</th>
+                <td>{{ c.customer_code }}</td>
+                <td><a class="text-dark" href="{% url 'sale_management:customer_detail' c.pk %}">{{ c.customer_name }}</a></td>
+                <td>{{ c.legal_name }}</td>
+                <td>{{ c.customer_address }}</td>
+                <td><div class="dropdown">
+                    <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-tools"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="{% url 'sale_management:customer_detail' c.pk %}"><i class="bi bi-info-square"></i> Customer information</a></li>
+                      <li><a class="dropdown-item" href="{% url 'sale_management:customer_update' c.pk %}"><i class="bi bi-pencil-fill"></i> Edit customer</a></li>
+                      <li><a class="dropdown-item" href="{% url 'sale_management:customer_delete' c.pk %}"><i style = "color: rgb(180, 28, 28);" class="bi bi-trash"></i> Delete customer</a></li>
+                    </ul>
+                  </div></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<!-- Pagination Start -->
+<div class="col-md-12">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+
+            {% if customers.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ customer.previous_page_number }}{% if request.GET.customer_name %}&customer_name={{ request.GET.customer_name }}{% endif %}" tabindex="-1">Trước</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+            {% endif %}
+
+            {% if customers.number > 5 %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            {% endif %}
+
+            {% for i in customers.paginator.page_range %}
+                {% if i > customers.number|add:"-5" %}
+                    {% if i < customers.number|add:"5" %}
+                        {% if customers.number == i %}
+                            <li class="page-item active">
+                                <a class="page-link" href="?page={{ i }}{% if request.GET.customer_name %}&customer_name={{ request.GET.customer_name }}{% endif %}">{{ i }}</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ i }}{% if request.GET.customer_name %}&customer_name={{ request.GET.customer_name }}{% endif %}">{{ i }}</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {% if customers.number < customers.paginator.num_pages|add:"-4" %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            {% endif %}
+
+            {% if customers.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ customers.next_page_number }}{% if request.GET.customer_name %}&customer_name={{ request.GET.customer_name }}{% endif %}">Sau</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            {% endif %}
+
+        </ul>
+    </nav>
+</div>
+
+
+
+<div class="modal fade" id="create_customer_Modal" tabindex="-1" aria-labelledby="create_customerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create_customerModalLabel">Customer Creation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="main-tab" data-bs-toggle="tab" data-bs-target="#main"
+                                type="button" role="tab" aria-controls="main" aria-selected="true" style="color: #9b1b14;">Customer Information</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="other-tab" data-bs-toggle="tab" data-bs-target="#other"
+                                type="button" role="tab" aria-controls="other" aria-selected="false" style="color: #9b1b14;">Account Information</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="main-tab">
+                            <div class="container">
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="customer_name" class="form-label fw-bold text-dark" >Customer name</label>
+                                        {{ form.customer_name }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="legal_name" class="form-label fw-bold text-dark" >Legal name</label>
+                                        {{ form.legal_name }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="customer_address" class="form-label fw-bold text-dark" >Customer address</label>
+                                        {{ form.customer_address }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="legal_address" class="form-label fw-bold text-dark" >Legal address</label>
+                                        {{ form.legal_address }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="customer_type" class="form-label fw-bold text-dark" >Customer type</label>
+                                        {{ form.customer_type }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="channel" class="form-label fw-bold text-dark" >Channel</label>
+                                        {{ form.channel }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="sale_area" class="form-label fw-bold text-dark" >Sale area</label>
+                                        {{ form.sale_area }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="province" class="form-label fw-bold text-dark" >Province</label>
+                                        {{ form.province }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="customer_code" class="form-label fw-bold text-dark" >Customer code</label>
+                                        {{ form.customer_code }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="tax_code" class="form-label fw-bold text-dark" >Tax code</label>
+                                        {{ form.tax_code }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="phone" class="form-label fw-bold text-dark" >Phone</label>
+                                        {{ form.phone }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="fax" class="form-label fw-bold text-dark" >Fax</label>
+                                        {{ form.fax }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="contact_person" class="form-label fw-bold text-dark" >Contact person</label>
+                                        {{ form.contact_person }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="contact_no" class="form-label fw-bold text-dark" >Contact number</label>
+                                        {{ form.contact_no }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="represented_by" class="form-label fw-bold text-dark" >Represented by</label>
+                                        {{ form.represented_by }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="LoA" class="form-label fw-bold text-dark" >LoA</label>
+                                        {{ form.LoA }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="other" role="tabpanel" aria-labelledby="other-tab">
+                            <div class="container">
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="account_no_1" class="form-label fw-bold text-dark" >Account number 1</label>
+                                        {{ form.account_no_1 }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="account_no_2" class="form-label fw-bold text-dark" >Account number 2</label>
+                                        {{ form.account_no_2 }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="account_no_3" class="form-label fw-bold text-dark" >Account number 3</label>
+                                        {{ form.account_no_3 }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="bank_name_1" class="form-label fw-bold text-dark" >Bank name 1</label>
+                                        {{ form.bank_name_1 }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="bank_name_2" class="form-label fw-bold text-dark" >Bank name 2</label>
+                                        {{ form.bank_name_2 }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="bank_name_3" class="form-label fw-bold text-dark" >Bank name 3</label>
+                                        {{ form.bank_name_3 }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="remark" class="form-label fw-bold text-dark" >Remark</label>
+                                        {{ form.remark }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn text-white" name="btncustomerinput" value="Customer input" style="background-color: #9b1b14;">Create customer</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

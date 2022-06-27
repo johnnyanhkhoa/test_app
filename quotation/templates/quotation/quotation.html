@@ -1,0 +1,230 @@
+{% extends 'sale_agreement/_Master.html' %}
+{% block title_tab %}Sales app | Quotation List{% endblock %}
+{% load static %}
+{% load humanize %}
+
+{% block main_content %}
+<!-- Form Start -->
+<br>
+<div class="container-fluid pt-4 px-4">
+    <div class="container-fluid bg-light text-dark">
+        <div class="row justify-content-start">
+            <span></span>
+            <div class="col-4" style="background-color: rgb(204, 192, 218); text-align: center;">
+                CÔNG TY CỔ PHẦN DƯỢC PHẨM TEDIS 
+            </div>
+            <div class="col-4" style="text-align: center;">
+                CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+            </div>
+            </span>
+        </div>
+        <div class="row justify-content-start">
+            <div class="col-4" style="background-color: rgb(204, 192, 218); text-align: center;">
+                Số: {{ quotation.quotation_no }} 
+            </div>
+            <div class="col-4" style="text-align: center;">
+                Độc lập - Tự do - Hạnh phúc
+            </div>
+        </div>
+        <div class="row justify-content-start">
+            <div class="col-4" style="text-align: center;">
+        
+            </div>
+            <div class="col-4" style="text-align: center;">
+            
+            </div>
+            <div class="col-4" style="text-align: center;">
+                Long Hậu, Ngày    tháng 05 năm 2022 
+            </div>
+        </div>
+        <div class="row justify-content-start">
+            <div class="col-4" style="text-align: center;">
+        
+            </div>
+            <div class="col-4 fw-bold text-dark fs-3" style="text-align: center;">
+                BẢNG BÁO GIÁ  
+            </div>
+            <div class="col-4" style="text-align: center;">
+                
+            </div>
+        </div>
+        <div class="row justify-content-start">
+            <div class="col-4" style="text-align: center;">
+        
+            </div>
+            <div class="col-4 fw-bold text-dark fs-4" style="text-align: center;">
+                QUOTATION  
+            </div>
+            <div class="col-4" style="text-align: center;">
+                
+            </div>
+        </div>
+        <br>
+        <div class="row justify-content-start">
+            <div class="col-4" style="text-align: center;">
+        
+            </div>
+            <div class="col-4" style="text-align: center;">
+                Kính gửi: 
+                <span class="fw-bold text-dark fs-5">{{ quotation.customer_id }}</span> 
+            </div>
+            <div class="col-4" style="text-align: center;">
+                
+            </div>
+        </div>
+        <br>
+        <div class="row justify-content-start">
+            <div class="col">
+                Công Ty Cổ Phần Dược Phẩm TEDIS - VIỆT HÀ kính gửi đến Quý khách hàng bảng báo giá chi tiết như sau 
+            </div>
+        </div>
+        <br>
+        <div class="row justify-content-start">
+            <div class="col">
+                <i>TEDIS – VIETHA pharmaceutical Join-Stock Company send you the quotation with the details as follows:</i> 
+            </div>
+        </div>
+        <br>
+        <div class="row justify-content-start">
+            PHỤ LỤC HỢP ĐỒNG / DANH MỤC SẢN PHẨM / BÁO GIÁ SẢN PHẨM
+        </div>
+        <div class="row justify-content-start">
+            <form action="">
+                (Đính kèm hợp đồng số: {{ quotation.quotation_no }})
+              </form>
+        </div>
+        <table class="table table-bordered text-dark">
+            <thead>
+                <tr style="background-color: rgb(220, 230, 241);">
+                    <th scope="col">STT</th>
+                    <th scope="col">TÊN SẢN PHẨM</th>
+                    <th scope="col">TÊN HOẠT CHẤT</th>
+                    <th scope="col">NỒNG ĐỘ-HÀM LƯỢNG</th>
+                    <th scope="col">NHÀ SẢN XUẤT</th>
+                    <th scope="col">NƯỚC SẢN XUẤT</th>
+                    <th scope="col">SỐ CÔNG BỐ MP</th>
+                    <th scope="col">NGÀY CẤP SCBMP</th>
+                    <th scope="col">QUY CÁCH ĐÓNG GÓI</th>
+                    <th scope="col">ĐƠN VỊ TÍNH</th>
+                    <th scope="col">ĐƠN GIÁ(VAT)</th>
+                    <th scope="col">Thuế suất (%)</th>
+                    <th scope="col">NHÓM TÁC DỤNG DƯỢC LÝ</th>
+                    <th scope="col">NHÀ PHÂN PHỐI</th>
+                    <th scope="col">GHI CHÚ</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="col" class="fst-italic">1</th>
+                    <th scope="col" class="fst-italic">2</th>
+                    <th scope="col" class="fst-italic">3</th>
+                    <th scope="col" class="fst-italic">4</th>
+                    <th scope="col" class="fst-italic">5</th>
+                    <th scope="col" class="fst-italic">6</th>
+                    <th scope="col" class="fst-italic">7</th>
+                    <th scope="col" class="fst-italic">8</th>
+                    <th scope="col" class="fst-italic">9</th>
+                    <th scope="col" class="fst-italic">10</th>
+                    <th scope="col" class="fst-italic">11</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col" class="fst-italic">12</th>
+                    <th scope="col" class="fst-italic">13</th>
+                    <th scope="col"></th>
+                </tr>
+                {% for product in quotation_products %}
+                    
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ product.product_id }}</td>
+                    <td>{{ product.product_id.ingredient_list }}</td>
+                    <td></td>
+                    <td class="align-middle" style="text-align: center;">Alpol Cosmetique</td>
+                    <td class="align-middle" style="text-align: center;">Pháp</td>
+                    <td class="align-middle" style="text-align: center;">134317/20/CBMP-QLD</td>
+                    <td class="align-middle" style="text-align: center;">10/2/2020</td>
+                    <td class="align-middle" style="text-align: center;">{{ product.product_id.packing_size }}</td>
+                    <td class="align-middle" style="text-align: center;">{{ product.product_id.product_unit }}</td>
+                    <td class="align-middle" style="text-align: right;">{{ product.unit_price_vat|floatformat:0|intcomma }}</td>
+                    <td class="align-middle" style="text-align: right;">{{ product.product_id.vat }}</td>
+                    <td class="align-middle" style="text-align: center;">Kem dưỡng ẩm, giúp làm mềm và làm dịu da bị ửng
+                        đỏ, dành cho da nhạy cảm. </td>
+                    <td class="align-middle" style="text-align: center;">Công Ty Cổ Phần Dược Phẩm Tedis - Việt Hà</td>
+                    <td></td>
+                    <td>
+                        <button href="{% url 'quotation:quotation_product_delete' product.pk %}"><i style = "color: rgb(180, 28, 28);" class="bi bi-trash"></i> Delete Product</button>
+                    </td>
+                </tr>
+                    
+                {% endfor %}
+        </table>
+        <br>
+        <div class="row justify-content-start">
+            <div class="col">
+                Ghi chú / Remarks: 
+            </div>
+        </div>
+        <div class="row justify-content-start">
+            <div class="col">
+                &emsp;-&ensp;Đơn giá trên đã bao gồm thuế GTGT.  
+            </div>
+        </div>
+        <div class="row justify-content-start">
+            <div class="col">
+                &emsp;&nbsp;&ensp;<i>Price included VAT</i>  
+            </div>
+        </div>
+        <div class="row justify-content-start">
+            <div class="col">
+                &emsp;-&ensp;Báo giá này có hiệu lực từ ngày ký cho đến khi có báo giá khác thay thế  
+            </div>
+        </div>
+        <div class="row justify-content-start">
+            <div class="col">
+                &emsp;&nbsp;&ensp;<i>This quotation is valid from the signing date until further notice</i>  
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="row justify-content-between">
+            <div class="col-4" style="text-align: center;">
+                
+            </div>
+            <div class="col-4" style="text-align: center;">
+                Cần Thơ, ngày 12 tháng 03 năm 2021
+            </div>
+        </div>
+        <div class="row justify-content-between">
+            <div class="col-4" style="text-align: center;">
+                
+            </div>
+            <div class="col-4" style="text-align: center;">
+                BÊN BÁN
+            </div>
+        </div>
+        <div class="row justify-content-between">
+            <div class="col-4" style="text-align: center;">
+               
+            </div>
+            <div class="col-4" style="text-align: center;">
+                KẾ TOÁN TRƯỞNG
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="row justify-content-between">
+            <div class="col-4" style="text-align: center;">
+               
+            </div>
+            <div class="col-4" style="text-align: center;">
+                TÔ NGỌC CHI LAN
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Form End -->
+{% endblock %}

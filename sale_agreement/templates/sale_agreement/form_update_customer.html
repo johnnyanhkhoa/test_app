@@ -1,0 +1,154 @@
+{% extends 'sale_agreement/_Master.html' %}
+{% block title_tab %}Sales app | Customer Update{% endblock %}
+{% load static %}
+{% comment %} {% load humanize %} {% endcomment %}
+
+{% block main_content %}
+<h5 class="title" style="text-align: center; margin-top:20px">Customer edit</h5>
+<form method="post">
+    {% csrf_token %}
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link fw-bold text-dark active" id="main-tab" data-bs-toggle="tab" data-bs-target="#main" type="button"
+                role="tab" aria-controls="main" aria-selected="true">Customer Info</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link fw-bold text-dark" id="other-tab" data-bs-toggle="tab" data-bs-target="#other" type="button"
+                role="tab" aria-controls="other" aria-selected="false">Other Info</button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="main-tab">
+            <div class="container">
+                <div class="row align-items-start" style="margin-top: 10px;">
+                    <div class="col">
+                        <label for="customer_name" class="form-label fw-bold text-dark" >Customer name</label>
+                        {{ form.customer_name }}
+                    </div>
+                </div>
+                <div class="row align-items-start" style="margin-top: 10px;">
+                    <div class="col">
+                        <label for="legal_name" class="form-label fw-bold text-dark" >Legal name</label>
+                        {{ form.legal_name }}
+                    </div>
+                </div>
+                <div class="row align-items-start" style="margin-top: 10px;">
+                    <div class="col">
+                        <label for="customer_address" class="form-label fw-bold text-dark" >Customer address</label>
+                        {{ form.customer_address }}
+                    </div>
+                </div>
+                <div class="row align-items-start" style="margin-top: 10px;">
+                    <div class="col">
+                        <label for="legal_address" class="form-label fw-bold text-dark" >Legal address</label>
+                        {{ form.legal_address }}
+                    </div>
+                </div>
+                <div class="row align-items-start" style="margin-top: 10px;">
+                    <div class="col">
+                        <label for="customer_type" class="form-label fw-bold text-dark" >Customer type</label>
+                        {{ form.customer_type }}
+                    </div>
+                    <div class="col">
+                        <label for="channel" class="form-label fw-bold text-dark" >Channel</label>
+                        {{ form.channel }}
+                    </div>
+                </div>
+                <div class="row align-items-start" style="margin-top: 10px;">
+                    <div class="col">
+                        <label for="sale_area" class="form-label fw-bold text-dark" >Sale area</label>
+                        {{ form.sale_area }}
+                    </div>
+                    <div class="col">
+                        <label for="province" class="form-label fw-bold text-dark" >Province</label>
+                        {{ form.province }}
+                    </div>
+                </div>
+                <div class="row align-items-start" style="margin-top: 10px;">
+                    <div class="col">
+                        <label for="customer_code" class="form-label fw-bold text-dark" >Customer code</label>
+                        {{ form.customer_code }}
+                    </div>
+                    <div class="col">
+                        <label for="tax_code" class="form-label fw-bold text-dark" >Tax code</label>
+                        {{ form.tax_code }}
+                    </div>
+                </div>
+                <div class="row align-items-start" style="margin-top: 10px;">
+                    <div class="col">
+                        <label for="phone" class="form-label fw-bold text-dark" >Phone</label>
+                        {{ form.phone }}
+                    </div>
+                    <div class="col">
+                        <label for="fax" class="form-label fw-bold text-dark" >Fax</label>
+                        {{ form.fax }}
+                    </div>
+                </div>
+                <div class="row align-items-start" style="margin-top: 10px;">
+                    <div class="col">
+                        <label for="contact_person" class="form-label fw-bold text-dark" >Contact person</label>
+                        {{ form.contact_person }}
+                    </div>
+                    <div class="col">
+                        <label for="contact_no" class="form-label fw-bold text-dark" >Contact number</label>
+                        {{ form.contact_no }}
+                    </div>
+                </div>
+                <div class="row align-items-start" style="margin-top: 10px;">
+                    <div class="col">
+                        <label for="represented_by" class="form-label fw-bold text-dark" >Represented by</label>
+                        {{ form.represented_by }}
+                    </div>
+                    <div class="col">
+                        <label for="LoA" class="form-label fw-bold text-dark" >LoA</label>
+                        {{ form.LoA }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="other" role="tabpanel" aria-labelledby="other-tab">
+            <div class="container">
+                <div class="row align-items-start" style="margin-top: 10px;">
+                    <div class="col">
+                        <label for="account_no_1" class="form-label fw-bold text-dark" >Account number 1</label>
+                        {{ form.account_no_1 }}
+                    </div>
+                    <div class="col">
+                        <label for="account_no_2" class="form-label fw-bold text-dark" >Account number 2</label>
+                        {{ form.account_no_2 }}
+                    </div>
+                    <div class="col">
+                        <label for="account_no_3" class="form-label fw-bold text-dark" >Account number 3</label>
+                        {{ form.account_no_3 }}
+                    </div>
+                </div>
+                <div class="row align-items-start" style="margin-top: 10px;">
+                    <div class="col">
+                        <label for="bank_name_1" class="form-label fw-bold text-dark" >Bank name 1</label>
+                        {{ form.bank_name_1 }}
+                    </div>
+                    <div class="col">
+                        <label for="bank_name_2" class="form-label fw-bold text-dark" >Bank name 2</label>
+                        {{ form.bank_name_2 }}
+                    </div>
+                    <div class="col">
+                        <label for="bank_name_3" class="form-label fw-bold text-dark" >Bank name 3</label>
+                        {{ form.bank_name_3 }}
+                    </div>
+                </div>
+                <div class="row align-items-start" style="margin-top: 10px;">
+                    <div class="col">
+                        <label for="remark" class="form-label fw-bold text-dark" >Remark</label>
+                        {{ form.remark }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 20px; margin-bottom: 20px; margin-right: 20px">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn text-white" name="btnupdate" value="Customer update" style="background-color: #9b1b14;">Update customer</button>
+    </div>
+</form>
+<!-- Form End -->
+{% endblock %}

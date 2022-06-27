@@ -1,0 +1,150 @@
+{% extends 'sale_agreement/_Master.html' %}
+{% block title_tab %}Sales app | Customer information{% endblock %}
+{% load static %}
+{% load humanize %}
+
+{% block main_content %}
+<h5 class="title" style="text-align: center; margin-top:20px">Customer information</h5>
+<div class="container-fluid pt-4 px-4">
+    <div class="container-fluid">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold active" id="main-tab" data-bs-toggle="tab" data-bs-target="#main" type="button"
+                    role="tab" aria-controls="main" aria-selected="true" style="color: #9b1b14;">Customer Info</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold" id="other-tab" data-bs-toggle="tab" data-bs-target="#other" type="button"
+                    role="tab" aria-controls="other" aria-selected="false" style="color: #9b1b14;">Other Info</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="main-tab">
+                <div class="container">
+                    <div class="row align-items-start text-dark" style="margin-top: 20px; font-size:large">
+                        <div class="col fw-bold text-dark">
+                            Customer name: {{ customer.customer_name }}
+                        </div>
+                    </div>
+                    <div class="row align-items-start text-dark" style="margin-top: 10px; font-size:large">
+                        <div class="col fw-bold text-dark">
+                            Legal name: {{ customer.legal_name }}
+                        </div>
+                    </div>
+                    <div class="row align-items-start text-dark" style="margin-top: 10px; font-size:large">
+                        <div class="col">
+                            <span class="fw-bold">Customer address: </span> 
+                            {{ customer.customer_address }}
+                        </div>
+                    </div>
+                    <div class="row align-items-start text-dark" style="margin-top: 10px; font-size:large">
+                        <div class="col">
+                            <span class="fw-bold">Legal address: </span>
+                            {{ customer.legal_address }}
+                        </div>
+                    </div>
+                    <div class="row align-items-start text-dark" style="margin-top: 10px; font-size:large">
+                        <div class="col">
+                            <span class="fw-bold">Customer type: </span>
+                            {{ customer.customer_type }}
+                        </div>
+                        <div class="col">
+                            <span class="fw-bold">Channel: </span>
+                            {{ customer.channel }}
+                        </div>
+                    </div>
+                    <div class="row align-items-start text-dark" style="margin-top: 10px; font-size:large">
+                        <div class="col">
+                            <span class="fw-bold">Sale area: </span>
+                            {{ customer.sale_area }}
+                        </div>
+                        <div class="col">
+                            <span class="fw-bold">Province: </span>
+                            {{ customer.province }}
+                        </div>
+                    </div>
+                    <div class="row align-items-start text-dark" style="margin-top: 10px; font-size:large">
+                        <div class="col">
+                            <span class="fw-bold">Customer code: </span>
+                            {{ customer_code }}
+                        </div>
+                        <div class="col">
+                            <span class="fw-bold">Tax code: </span>
+                            {{ customer.tax_code }}
+                        </div>
+                    </div>
+                    <div class="row align-items-start text-dark" style="margin-top: 10px; font-size:large">
+                        <div class="col">
+                            <span class="fw-bold">Phone: </span>
+                            {{ customer.phone }}
+                        </div>
+                        <div class="col">
+                            <span class="fw-bold">Fax: </span>
+                            {{ customer.fax }}
+                        </div>
+                    </div>
+                    <div class="row align-items-start text-dark" style="margin-top: 10px; font-size:large">
+                        <div class="col">
+                            <span class="fw-bold">Contact person: </span>
+                            {{ customer.contact_person }}
+                        </div>
+                        <div class="col">
+                            <span class="fw-bold">Contact number: </span>
+                            {{ customer.contact_no }}
+                        </div>
+                    </div>
+                    <div class="row align-items-start text-dark" style="margin-top: 10px; font-size:large">
+                        <div class="col">
+                            <span class="fw-bold">Represented by: </span>
+                            {{ customer.represented_by }}
+                        </div>
+                        <div class="col">
+                            <span class="fw-bold">LoA: </span>
+                            {{ customer.LoA }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="other" role="tabpanel" aria-labelledby="other-tab">
+                <div class="container">
+                    <div class="row align-items-start text-dark" style="margin-top: 20px; font-size:large">
+                        <div class="col">
+                            <span class="fw-bold">Account number 1: </span>
+                            {{ customer.account_no_1 }}
+                        </div>
+                        <div class="col">
+                            <span class="fw-bold">Account number 2: </span>
+                            {{ customer.account_no_2 }}
+                        </div>
+                        <div class="col">
+                            <span class="fw-bold">Account number 3: </span>
+                            {{ customer.account_no_3 }}
+                        </div>
+                    </div>
+                    <div class="row align-items-start text-dark" style="margin-top: 10px; font-size:large">
+                        <div class="col">
+                            <span class="fw-bold">Bank name 1: </span>
+                            {{ customer.bank_name_1 }}
+                        </div>
+                        <div class="col">
+                            <span class="fw-bold">Bank name 2: </span>
+                            {{ customer.bank_name_2 }}
+                        </div>
+                        <div class="col">
+                            <span class="fw-bold">Bank name 3: </span>
+                            {{ customer.bank_name_3 }}
+                        </div>
+                    </div>
+                    <div class="row align-items-start text-dark" style="margin-top: 10px; font-size:large">
+                        <div class="col">
+                            <span class="fw-bold">Remark: </span>
+                            {{ customer.remark }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    {% endblock %}

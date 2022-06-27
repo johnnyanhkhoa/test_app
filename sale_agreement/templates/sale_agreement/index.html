@@ -1,0 +1,33 @@
+{% extends 'sale_agreement/_Master.html' %}
+{% block title_tab %}Sales app | Trang chủ{% endblock %}
+{% load static %}
+{% comment %} {% load humanize %} {% endcomment %}
+
+{% block main_content %}
+<!-- Sale & Revenue Start -->
+<div class="container-fluid pt-4 px-4">
+    <nav class="navbar navbar-light" style="background-color: #9b1b14;">
+        <div class="container-fluid">
+          <a class="navbar-brand text-white" href="{% url 'sale_management:product1' 0 %}">Product</a>
+        </div>
+    </nav>
+    <br>
+    <nav class="navbar navbar-light" style="background-color: #9b1b14;">
+        <div class="container-fluid">
+          <a class="navbar-brand text-white" href="{% url 'sale_management:customer_channel_filter' 0 %}">Customer</a>
+        </div>
+    </nav>
+    <br>
+    <nav class="navbar navbar-light" style="background-color: #9b1b14;">
+        <div class="container-fluid">
+          <a class="navbar-brand text-white" href="{% url 'quotation:quotation_list_status' 0 %}">Quotation</a>
+        </div>
+    </nav>
+    <br>
+    <nav class="navbar navbar-light" style="background-color: #9b1b14;">
+        <div class="container-fluid">
+          <a class="navbar-brand text-white" href="{% url 'quotation:contract_list_status' 0 %}">Sale contract</a>
+        </div>
+    </nav>
+</div>
+{% endblock %}

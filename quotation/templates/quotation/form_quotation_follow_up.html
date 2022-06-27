@@ -1,0 +1,38 @@
+{% extends 'sale_agreement/_Master.html' %}
+{% block title_tab %}Sales app | Quotation Data Input{% endblock %}
+{% load static %}
+{% load humanize %}
+
+{% block main_content %}
+<nav class="navbar navbar-light bg-white border">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold text-dark" href="#" style="color: #434343; margin-left: 20px">Quotation follow up</a>
+    </div>
+</nav>
+<div class="container-fluid bg-white border" style="width: 97%; margin-top: 20px" >
+    <br>
+    <div><span class="fw-bold text-dark" style="color: #434343; margin-left: 20px; font-size:medium">Customer: {{ quotation.customer_id }}</span></div>
+<form method="post">
+    {% csrf_token %}
+    <div class="container-fluid">
+        <div class="row align-items-start">
+        <input type="hidden" name="quotation_id" value="{{ quotation.id }}" />
+        <div class="col-6">
+            <label for="quotation_status" class="col-form-label fw-bold text-dark">Status</label>
+            {{ form_follow_up.quotation_status }}
+        </div>
+        <div class="col-6">
+            <label for="status_date" class="col-form-label fw-bold text-dark">Date</label>
+            <br>
+            {{ form_follow_up.status_date }}
+        </div>
+        <br>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-bottom: 20px">
+        <button type="button" class="btn btn-secondary" >Close</button>
+        <button type="submit" class="btn btn-primary" name="btn_followup" value="Quotation follow up">Create new quotation</button>
+    </div>
+</form>
+</div>
+</div>
+
+{% endblock %}

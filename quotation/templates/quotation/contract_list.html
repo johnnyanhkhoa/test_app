@@ -1,0 +1,358 @@
+{% extends 'sale_agreement/_Master.html' %}
+{% block title_tab %}Sales app | Contract List{% endblock %}
+{% load static %}
+{% load humanize %}
+
+{% block main_content %}
+<div class="container-fluid pt-4 px-4">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border:0.5px solid rgb(204, 204, 204);">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'quotation:contract_list_status' 0 %}">Contract</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Channel Filter
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% for channel in list_channel %}
+                            <li><a class="dropdown-item" href="{% url 'quotation:contract_list_channel' channel.pk %}">{{ channel }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Status Filter
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% for status in list_status %}
+                            <li><a class="dropdown-item" href="{% url 'quotation:contract_list_status' status.pk %}">{{ status }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+                <div class="btn-group" role="group" style="margin-right: 10px;">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Action
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <li><a href="" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#createcontractModal"><i class="bi bi-file-earmark-plus"></i> Create contract</a></li>
+                    </ul>
+                </div>
+                <form method="get" action="{% url 'quotation:search_contract' %}">
+                    <div class="search">
+                        <input type="text" name="contract_no" value="{{ contract_no }}" placeholder="Search keyword...">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <table class="table bg-light" style="border:0.5px solid rgb(204, 204, 204); margin-top: 10px">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" class="table-dark">Number</th>
+                <th scope="col" class="table-dark">Contract Number</th>
+                <th scope="col" class="table-dark">Customer</th>
+                <th scope="col" class="table-dark">Channel</th>
+                <th scope="col" class="table-dark">Date</th>
+                <th scope="col" class="table-dark">Status</th>
+                <th scope="col" class="table-dark"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in contracts %}
+            <tr>
+                <th scope="row">{{ c.id }}</th>
+                <td>{{ c.contract_no }}</td>
+                <td class="text-dark">{{ c.customer_id }}</td>
+                <td>{{ c.customer_id.channel }}</td>
+                <td>{{ c.contract_date }}</td>
+                <td>{{ c.contract_status }}</td>
+                <td><div class="dropdown">
+                    <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-tools"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      {% comment %} <li><a class="dropdown-item" href="{% url 'quotation:quotation_product_input' q.pk %}"><i class="bi bi-plus-square"></i> Add product to quotation</a></li> {% endcomment %}
+                      {% comment %} <li><a class="dropdown-item" href="{% url 'quotation:final_quotation' q.pk %}"><i class="bi bi-plus-square"></i> Quotation</a></li> {% endcomment %}
+                      {% comment %} <li><a class="dropdown-item" href="{% url 'quotation:html_to_pdf_view' q.pk %}"><i class="bi bi-plus-square"></i> Print PDF</a></li> {% endcomment %}
+                      <li><a class="dropdown-item" href="#"><i class="bi bi-pencil-fill"></i> Edit Quotation</a></li>
+                      <li><a class="dropdown-item" href="{% url 'quotation:contract_delete' c.pk %}"><i style = "color: rgb(180, 28, 28);" class="bi bi-trash"></i> Delete contract</a></li>
+                    </ul>
+                  </div></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<!-- Pagination Start -->
+<div class="col-md-12">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+
+            {% if contracts.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ contracts.previous_page_number }}{% if request.GET.contract_no %}&contract_no={{ request.GET.contract_no }}{% endif %}" tabindex="-1">Previous</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+            {% endif %}
+
+            {% if contracts.number > 5 %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            {% endif %}
+
+            {% for i in contracts.paginator.page_range %}
+                {% if i > contracts.number|add:"-5" %}
+                    {% if i < contracts.number|add:"5" %}
+                        {% if contracts.number == i %}
+                            <li class="page-item active">
+                                <a class="page-link" href="?page={{ i }}{% if request.GET.contract_no %}&contract_no={{ request.GET.contract_no }}{% endif %}">{{ i }}</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ i }}{% if request.GET.contract_no %}&contract_no={{ request.GET.contract_no }}{% endif %}">{{ i }}</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {% if contracts.number < contracts.paginator.num_pages|add:"-4" %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            {% endif %}
+
+            {% if contracts.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ contracts.next_page_number }}{% if request.GET.contract_no %}&contract_no={{ request.GET.contract_no }}{% endif %}">Next</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            {% endif %}
+
+        </ul>
+    </nav>
+</div>
+
+
+<!-- Modals -->
+
+<!-- Create Contract Modal -->
+
+
+
+  <div class="modal fade" id="createcontractModal" tabindex="-1" aria-labelledby="createcontractModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createcontractModalLabel">Contract Creation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                                type="button" role="tab" aria-controls="home" aria-selected="true">Contract Info</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                                type="button" role="tab" aria-controls="profile" aria-selected="false">Other Info</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                                type="button" role="tab" aria-controls="contact" aria-selected="false">Fee Information</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="container">
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="contract_no" class="form-label">Contract number</label>
+                                        {{ form_create_contract.contract_no }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="contract_date" class="form-label" >Contract date</label>
+                                        {{ form_create_contract.contract_date }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="valid_from_date" class="form-label" >Valid from date</label>
+                                        {{ form_create_contract.valid_from_date }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="valid_to_date" class="form-label" >Valid to date</label>
+                                        {{ form_create_contract.valid_to_date }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="customer_name" class="form-label" >Customer name</label>
+                                        {{ form_create_contract.customer_id }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="channel" class="form-label" >Channel</label>
+                                        {{ form_create_contract.channel }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="container">
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="placement_time_in_prior_to_delivery" class="form-label" >Placement time in prior to delivery</label>
+                                        {{ form_create_contract.placement_time_in_prior_to_delivery }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="delivery_time" class="form-label" >Delivery time</label>
+                                        {{ form_create_contract.delivery_time }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="registration_document" class="form-label" >Registration document</label>
+                                        {{ form_create_contract.registration_document }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="payment_method" class="form-label" >Payment method</label>
+                                        {{ form_create_contract.payment_method }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="payment_due" class="form-label" >Payment due</label>
+                                        {{ form_create_contract.payment_due }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="penalty_rate_for_late_payment" class="form-label" >Penalty rate for late payment</label>
+                                        {{ form_create_contract.penalty_rate_for_late_payment }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="bank_charges_related_to_payment" class="form-label" >Bank charges related to payment</label>
+                                        {{ form_create_contract.bank_charges_related_to_payment }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="delivery_point" class="form-label" >Delivery point</label>
+                                        {{ form_create_contract.delivery_point }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="enquiry_for_goods_receipt" class="form-label" >Enquiry for goods receipt</label>
+                                        {{ form_create_contract.enquiry_for_goods_receipt }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="enquiry_for_goods_return" class="form-label" >Enquiry for goods return</label>
+                                        {{ form_create_contract.enquiry_for_goods_return }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="documents_to_be_delivered_with_each_delivery" class="form-label" >Documents to be delivered with each delivery</label>
+                                        {{ form_create_contract.documents_to_be_delivered_with_each_delivery }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="complaint_time_due_to_product_issue" class="form-label" >Complaint time due to product issue</label>
+                                        {{ form_create_contract.complaint_time_due_to_product_issue }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="compensation_time" class="form-label" >Compensation time</label>
+                                        {{ form_create_contract.compensation_time }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                            <div class="container">
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="support_fee_on_target_achivement" class="form-label" >Support fee on target achivement</label>
+                                        {{ form_create_contract.support_fee_on_target_achivement }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="support_fee_on_transportation" class="form-label" >Support fee on transportation</label>
+                                        {{ form_create_contract.support_fee_on_transportation }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="support_fee_for_payment_due_date" class="form-label" >Support fee for payment due date</label>
+                                        {{ form_create_contract.support_fee_for_payment_due_date }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="support_fee_for_new_pos" class="form-label" >Support fee for new pos</label>
+                                        {{ form_create_contract.support_fee_for_new_pos }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="support_fee_for_display" class="form-label" >Support fee for display</label>
+                                        {{ form_create_contract.support_fee_for_display }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="support_fee_for_listing" class="form-label" >Support fee for listing</label>
+                                        {{ form_create_contract.support_fee_for_listing }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="support_fee_for_advertising_and_birthday" class="form-label" >Support fee for advertising and birthday</label>
+                                        {{ form_create_contract.support_fee_for_advertising_and_birthday }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="support_fee_for_product_creation" class="form-label" >Support fee for product creation</label>
+                                        {{ form_create_contract.support_fee_for_product_creation }}
+                                    </div>
+                                </div>
+                                <div class="row align-items-start" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <label for="method_of_support_fee_payment" class="form-label" >Method of support fee payment</label>
+                                        {{ form_create_contract.method_of_support_fee_payment }}
+                                    </div>
+                                    <div class="col">
+                                        <label for="penalty_for_agreement_breach" class="form-label" >Penalty for agreement breach</label>
+                                        {{ form_create_contract.penalty_for_agreement_breach }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" name="btncontractinput" value="Contract input">Create
+                    Contract</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
