@@ -58,7 +58,7 @@ class Contract(models.Model):
     contract_status = models.ForeignKey(Status, on_delete=models.PROTECT, null=True)
     status_date = models.DateField(null=True, default=today)
     placement_time_in_prior_to_delivery = models.IntegerField(null=True) 
-    delivery_time = models.DateTimeField(null=True, default=today)
+    delivery_time = models.DateTimeField(null=True, default=now)
     registration_document = models.CharField(max_length=100, null=True)
     payment_method = models.CharField(max_length=100, null=True)
     payment_due = models.IntegerField(null=True)

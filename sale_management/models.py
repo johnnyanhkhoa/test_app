@@ -91,10 +91,10 @@ class Province(models.Model):
     province_name = models.CharField(max_length=200)
     created_by = models.IntegerField(null=True)
     created_at = models.DateTimeField(null=True, default=now)
-    updated_by = models.IntegerField(null=True)
-    updated_at = models.DateTimeField(null=True, default=now)
-    deleted_by = models.IntegerField(null=True)
-    deleted_at = models.DateTimeField(null=True, default=now)
+    updated_by = models.IntegerField(null=True, blank=True)
+    updated_at = models.DateTimeField(null=True, blank=True)
+    deleted_by = models.IntegerField(null=True, blank=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
     
 
     def __str__(self):

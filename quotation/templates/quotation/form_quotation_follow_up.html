@@ -28,8 +28,8 @@
         </div>
         <br>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-bottom: 20px">
-        <button type="button" class="btn btn-secondary" >Close</button>
-        <button type="submit" class="btn btn-primary" name="btn_followup" value="Quotation follow up">Create new quotation</button>
+        <a class="btn btn-secondary" href="{% url 'quotation:quotation_list_channel' 0 %}" role="button">Close</a>
+        <button type="submit" class="btn btn-primary" name="btn_followup" value="Quotation follow up">Add</button>
     </div>
 </form>
 </div>

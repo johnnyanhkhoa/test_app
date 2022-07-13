@@ -18,6 +18,7 @@ urlpatterns = [
     path('contract-list-status/<int:pk>/', views.contract_list_status, name='contract_list_status'),
     path('contract-list-channel/<int:pk>/', views.contract_list_channel, name='contract_list_channel'),
     path('search_contract/', views.search_contract, name='search_contract'),
+    path('contract_update/<int:pk>/', views.contract_update, name='contract_update'),
     path('contract_delete/<int:pk>/', views.contract_delete, name='contract_delete'),
     
 ]

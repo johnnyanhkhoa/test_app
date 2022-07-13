@@ -82,10 +82,13 @@ def quotation_list_channel(request, pk):
     list_status = Status.objects.order_by('status')
     
     # Đọc danh sách sản phẩm theo Channel
+    quotations = Quotation.objects.all()
     if pk == 0:
         quotations = Quotation.objects.order_by('quotation_no')
     else:
-        quotations = Quotation.objects.filter(channel_id=pk).order_by('quotation_no')
+        customer_name = Customer.objects.get(customer_name=quotations.customer_id)
+        channel = customer_name.channel
+        quotations = Quotation.objects.filter(channel=pk).order_by('quotation_no')
 
     # Phân trang
     page = request.GET.get('page', 1)
@@ -339,64 +342,13 @@ def contract_list_channel(request, pk):
     if 's_user' not in request.session:
         return redirect('sale_agreement:signin')
 
-    # Tạo Contract mới
-    chuoi_kq_input_contract = ''
-    channels = Channel.objects.all() # lấy channel từ customer để filter
-    customers = Customer.objects.all()
-    statuses = Status.objects.all()
-    if request.POST.get('btncontractinput'):
-        customer_name = request.POST.get('customer_name')
-        customer_id = Customer.objects.only('id').get(id=customer_name)
-        channel = Channel.objects.only('channel_name').get(channel_name=customer_id.channel)
-        status_name = request.POST.get('status_name')
-        contract_status = Status.objects.only('id').get(id=status_name)
-        contract_no = request.POST.get('contract_no')
-        contract_date = request.POST.get('contract_date')
-        valid_from_date = request.POST.get('valid_from_date')
-        valid_to_date = request.POST.get('valid_to_date')
-        placement_time_in_prior_to_delivery = request.POST.get('placement_time_in_prior_to_delivery')
-        delivery_time = request.POST.get('delivery_time')
-        registration_document = request.POST.get('registration_document')
-        payment_method = request.POST.get('payment_method')
-        payment_due = request.POST.get('payment_due')
-        penalty_rate_for_late_payment = request.POST.get('penalty_rate_for_late_payment')
-        bank_charges_related_to_payment = request.POST.get('bank_charges_related_to_payment')
-        delivery_point = request.POST.get('delivery_point')
-        enquiry_for_goods_receipt = request.POST.get('enquiry_for_goods_receipt')
-        enquiry_for_goods_return = request.POST.get('enquiry_for_goods_return')
-        documents_to_be_delivered_with_each_delivery = request.POST.get('documents_to_be_delivered_with_each_delivery')
-        complaint_time_due_to_product_issue = request.POST.get('complaint_time_due_to_product_issue')
-        compensation_time = request.POST.get('compensation_time')
-        support_fee_on_target_achivement = request.POST.get('support_fee_on_target_achivement')
-        support_fee_on_transportation = request.POST.get('support_fee_on_transportation')
-        support_fee_for_payment_due_date = request.POST.get('support_fee_for_payment_due_date')
-        support_fee_for_new_pos = request.POST.get('support_fee_for_new_pos')
-        support_fee_for_display = request.POST.get('support_fee_for_display')
-        support_fee_for_listing = request.POST.get('support_fee_for_listing')
-        support_fee_for_advertising_and_birthday = request.POST.get('support_fee_for_advertising_and_birthday')
-        support_fee_for_product_creation = request.POST.get('support_fee_for_product_creation')
-        method_of_support_fee_payment = request.POST.get('method_of_support_fee_payment')
-        penalty_for_agreement_breach = request.POST.get('penalty_for_agreement_breach')
-        chuoi_kq_input_contract = '''
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                Đã đăng ký thông tin thành công.
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        '''
-        contract_info = Contract(customer_id=customer_id, channel=channel , contract_no=contract_no, contract_date=contract_date,
-                               valid_from_date=valid_from_date, valid_to_date=valid_to_date, contract_status=contract_status,
-                               placement_time_in_prior_to_delivery=placement_time_in_prior_to_delivery, delivery_time=delivery_time, registration_document=registration_document,
-                               payment_method=payment_method, payment_due=payment_due, penalty_rate_for_late_payment=penalty_rate_for_late_payment,
-                               bank_charges_related_to_payment=bank_charges_related_to_payment, delivery_point=delivery_point, enquiry_for_goods_receipt=enquiry_for_goods_receipt,
-                               enquiry_for_goods_return=enquiry_for_goods_return, documents_to_be_delivered_with_each_delivery=documents_to_be_delivered_with_each_delivery, complaint_time_due_to_product_issue=complaint_time_due_to_product_issue,
-                               compensation_time=compensation_time, support_fee_on_target_achivement=support_fee_on_target_achivement, support_fee_on_transportation=support_fee_on_transportation,
-                               support_fee_for_payment_due_date=support_fee_for_payment_due_date, support_fee_for_new_pos=support_fee_for_new_pos, support_fee_for_display=support_fee_for_display,
-                               support_fee_for_listing=support_fee_for_listing, support_fee_for_advertising_and_birthday=support_fee_for_advertising_and_birthday, support_fee_for_product_creation=support_fee_for_product_creation,
-                               method_of_support_fee_payment=method_of_support_fee_payment, penalty_for_agreement_breach=penalty_for_agreement_breach)
-        contract_info.save()
-        return redirect('/contract-list-status/0/')
+    # Create quotation
+    form_create_contract = CreateContractForm()
+    if request.method == 'POST':
+        form_create_contract = CreateContractForm(request.POST)
+        if form_create_contract.is_valid():
+            form_create_contract.save()
+            return redirect('/contract-list-status/0/')
         
     # Đọc danh sách Channel
     list_channel = Channel.objects.order_by('channel_name')
@@ -419,10 +371,29 @@ def contract_list_channel(request, pk):
         'list_channel' : list_channel,
         'list_status' : list_status,
         'contracts' : contract_pager,
-        'chuoi_kq_input_contract' : chuoi_kq_input_contract,
+        'form_create_contract' : form_create_contract,
         'channels' : channels,
         'customers' : customers,
         'statuses' : statuses,
+    })
+
+
+def contract_update(request, pk):
+    # Kiểm tra session xem khách hàng đã đăng nhập chưa?
+    if 's_user' not in request.session:
+        return redirect('sale_agreement:signin')
+    
+    # Edit contract
+    contract = Contract.objects.get(pk=pk)
+    form_update_contract = CreateContractForm(instance=contract)
+    if request.method == 'POST':
+        form_update_contract = CreateContractForm(request.POST, instance=contract)
+        if form_update_contract.is_valid():
+            form_update_contract.save()
+            return redirect('/contract-list-channel/0/')
+    return render(request, 'quotation/form_update_contract.html', {
+        'contract' : contract,
+        'form_update_contract' : form_update_contract,
     })
     
     
@@ -466,3 +437,4 @@ def contract_delete(request, pk):
         return redirect('index')
     contract_info.delete()
     return redirect('/contract-list-channel/0/')
+

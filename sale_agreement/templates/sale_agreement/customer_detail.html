@@ -14,7 +14,7 @@
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link fw-bold" id="other-tab" data-bs-toggle="tab" data-bs-target="#other" type="button"
-                    role="tab" aria-controls="other" aria-selected="false" style="color: #9b1b14;">Other Info</button>
+                    role="tab" aria-controls="other" aria-selected="false" style="color: #9b1b14;">Bank Info</button>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -144,7 +144,10 @@
             </div>
         </div>
     </div>
-
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 20px; margin-bottom: 20px; margin-right: 20px">
+        <a class="btn btn-secondary" href="{% url 'sale_management:customer_channel_filter' 0 %}" role="button">Close</a>
+        <a class="btn btn-secondary" href="{% url 'sale_management:customer_update' customer.pk %}" role="button" style="background-color: #9b1b14;">Edit</a>
+    </div>
 
 
     {% endblock %}

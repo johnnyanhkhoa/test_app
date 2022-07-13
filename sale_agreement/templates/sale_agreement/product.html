@@ -7,13 +7,13 @@
 <div class="container-fluid pt-4 px-4">
     <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border:0.5px solid rgb(204, 204, 204);">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'sale_management:product1' 0 %}">Product</a>
+            <a class="navbar-brand fw-bold text-dark" href="{% url 'sale_management:product1' 0 %}">Product</a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            Type filter
+                            Type
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             {% for category in list_category %}
@@ -24,7 +24,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            Brand filter
+                            Brand
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             {% for brand in list_brand %}
@@ -35,7 +35,7 @@
                 </ul>
                 <div class="btn-group" role="group" style="margin-right: 10px;">
                     <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
-                        data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #9b1b14;">
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         Action
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -73,9 +73,9 @@
                         <i class="bi bi-tools"></i>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="{% url 'sale_management:product_detail' p.pk %}" ><i class="bi bi-info-square"></i> Product information</a></li>
-                      <li><a class="dropdown-item" href="{% url 'sale_management:product_update' p.pk %}" ><i class="bi bi-pencil-fill"></i> Edit product</a></li>
-                      <li><a class="dropdown-item" href="{% url 'sale_management:product_delete' p.pk %}"><i style = "color: rgb(180, 28, 28);" class="bi bi-trash"></i> Delete product</a></li>
+                      <li><a class="dropdown-item" href="{% url 'sale_management:product_detail' p.pk %}" style="text-align: center;"><i class="bi bi-info-square"></i> Detail</a></li>
+                      <li><a class="dropdown-item" href="{% url 'sale_management:product_update' p.pk %}" style="text-align: center;"><i class="bi bi-pencil-fill"></i> Edit</a></li>
+                      <li><a class="dropdown-item" href="{% url 'sale_management:product_delete' p.pk %}" style="text-align: center;"><i style = "color: rgb(180, 28, 28);" class="bi bi-trash"></i> Delete</a></li>
                     </ul>
                   </div></td>
             </tr>

@@ -7,13 +7,13 @@
 <div class="container-fluid pt-4 px-4">
     <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border:0.5px solid rgb(204, 204, 204);">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'quotation:quotation_list_channel' 0 %}">Quotation</a>
+            <a class="navbar-brand fw-bold text-dark" href="{% url 'quotation:quotation_list_channel' 0 %}">Quotation</a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            Channel Filter
+                            Channel
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             {% for channel in list_channel %}
@@ -24,7 +24,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            Status Filter
+                            Status
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             {% for status in list_status %}
@@ -39,7 +39,7 @@
                         Action
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <li><a href="" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#createquotationModal"><i class="bi bi-file-earmark-plus"></i> Create quotation</a></li>
+                        <li><a href="" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#createquotationModal"><i class="bi bi-file-earmark-plus"></i> Create new</a></li>
                     </ul>
                 </div>
                 <form method="get" action="{% url 'quotation:search_quotation' %}">
@@ -79,12 +79,12 @@
                         <i class="bi bi-tools"></i>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li><a class="dropdown-item" href="{% url 'quotation:quotation_product_input' q.pk %}"><i class="bi bi-plus-square"></i> Add product to quotation</a></li>
-                      <li><a class="dropdown-item" href="{% url 'quotation:final_quotation' q.pk %}"><i class="bi bi-binoculars"></i> View quotation</a></li>
+                      <li><a class="dropdown-item" href="{% url 'quotation:quotation_product_input' q.pk %}"><i class="bi bi-plus-square"></i> Add product</a></li>
+                      <li><a class="dropdown-item" href="{% url 'quotation:final_quotation' q.pk %}"><i class="bi bi-binoculars"></i> View</a></li>
                       <li><a class="dropdown-item" href="{% url 'quotation:html_to_pdf_view' q.pk %}"><i class="bi bi-file-earmark-arrow-down"></i> Print PDF</a></li>
-                      <li><a class="dropdown-item" href="{% url 'quotation:quotation_update' q.pk %}"><i class="bi bi-pencil-fill"></i> Edit Quotation</a></li>
-                      <li><a class="dropdown-item" href="{% url 'quotation:quotation_follow_up' q.pk %}"><i class="bi bi-calendar-check"></i> Quotation follow up</a></li>
-                      <li><a class="dropdown-item" href="{% url 'quotation:quotation_delete' q.pk %}"><i style = "color: rgb(180, 28, 28);" class="bi bi-trash"></i> Delete quotation</a></li>
+                      <li><a class="dropdown-item" href="{% url 'quotation:quotation_update' q.pk %}"><i class="bi bi-pencil-fill"></i> Edit</a></li>
+                      {% comment %} <li><a class="dropdown-item" href="{% url 'quotation:quotation_follow_up' q.pk %}"><i class="bi bi-calendar-check"></i> Quotation follow up</a></li> {% endcomment %}
+                      <li><a class="dropdown-item" href="{% url 'quotation:quotation_delete' q.pk %}"><i style = "color: rgb(180, 28, 28);" class="bi bi-trash"></i> Delete</a></li>
                     </ul>
                   </div></td>
             </tr>
@@ -157,33 +157,32 @@
     <div class="modal-dialog">
       <div id="addQuotation" class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="createquotationModalLabel">New quotation</h5>
+          <h5 class="modal-title" id="createquotationModalLabel">Quotation creation</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form method="post">
               {% csrf_token %}
               <div class="mb-3">
-                  <label for="quotation_no" class="col-form-label">Quotation Number</label>
+                  <label for="quotation_no" class="col-form-label fw-bold text-dark">Quotation Number</label>
                   {{ form.quotation_no }}
               </div>
               <div class="mb-3">
-                  <label for="customer_id" class="col-form-label">Customer</label>
+                  <label for="customer_id" class="col-form-label fw-bold text-dark">Customer</label>
                   {{ form.customer_id }}
               </div>
               <div class="mb-3">
-                  <label for="quotation_date" class="col-form-label">Quotation Date</label>
+                  <label for="quotation_date" class="col-form-label fw-bold text-dark">Quotation Date</label>
                   {{ form.quotation_date }}
               </div>
               <div class="mb-3">
-                  <label for="quotation_remark" class="col-form-label">Quotation Remark</label>
+                  <label for="quotation_remark" class="col-form-label fw-bold text-dark">Quotation Remark</label>
                   {{ form.quotation_remark }}
               </div>
               </div>
               <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" name="btnquotationinput" value="Quotation input">Create new
-                      quotation</button>
+                  <button type="submit" class="btn btn-primary" name="btnquotationinput" value="Quotation input" style="background-color: #9b1b14;">Create quotation</button>
               </div>
           </form>
       </div>

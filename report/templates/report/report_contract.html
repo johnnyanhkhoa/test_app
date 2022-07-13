@@ -1,5 +1,5 @@
 {% extends 'sale_agreement/_Master.html' %}
-{% block title_tab %}Sales app | Contract List{% endblock %}
+{% block title_tab %}Sales app | Report{% endblock %}
 {% load static %}
 {% load humanize %}
 
@@ -7,41 +7,16 @@
 <div class="container-fluid pt-4 px-4">
     <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border:0.5px solid rgb(204, 204, 204);">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold text-dark" href="{% url 'quotation:contract_list_status' 0 %}">Contract</a>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Channel
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {% for channel in list_channel %}
-                            <li><a class="dropdown-item" href="{% url 'quotation:contract_list_channel' channel.pk %}">{{ channel }}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Status
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {% for status in list_status %}
-                            <li><a class="dropdown-item" href="{% url 'quotation:contract_list_status' status.pk %}">{{ status }}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </li>
+            <a class="navbar-brand fw-bold text-dark" href="{% url 'report:report_contract' 0 %}">Report</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 30px">
+                <ul class="nav nav-pills me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                          <a class="nav-link bg-dark fw-bold active" aria-current="page" href="#">Sale contract</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link text-dark fw-bold" href="#">Quotation</a>
+                        </li>
                 </ul>
-                <div class="btn-group" role="group" style="margin-right: 10px;">
-                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Action
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <li><a href="" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#createcontractModal"><i class="bi bi-file-earmark-plus"></i> Create new</a></li>
-                    </ul>
-                </div>
                 <form method="get" action="{% url 'quotation:search_contract' %}">
                     <div class="search">
                         <input type="text" name="contract_no" value="{{ contract_no }}" placeholder="Search keyword...">
@@ -51,45 +26,65 @@
             </div>
         </div>
     </nav>
-    <table class="table bg-light" style="border:0.5px solid rgb(204, 204, 204); margin-top: 10px">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col" class="table-dark">Number</th>
-                <th scope="col" class="table-dark">Contract Number</th>
-                <th scope="col" class="table-dark">Customer</th>
-                <th scope="col" class="table-dark">Channel</th>
-                <th scope="col" class="table-dark">Date</th>
-                <th scope="col" class="table-dark">Status</th>
-                <th scope="col" class="table-dark"></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for c in contracts %}
-            <tr>
-                <th scope="row">{{ c.id }}</th>
-                <td>{{ c.contract_no }}</td>
-                <td class="text-dark">{{ c.customer_id }}</td>
-                <td>{{ c.customer_id.channel }}</td>
-                <td>{{ c.contract_date }}</td>
-                <td>{{ c.contract_status }}</td>
-                <td><div class="dropdown">
-                    <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-tools"></i>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      {% comment %} <li><a class="dropdown-item" href="{% url 'quotation:quotation_product_input' q.pk %}"><i class="bi bi-plus-square"></i> Add product to quotation</a></li> {% endcomment %}
-                      {% comment %} <li><a class="dropdown-item" href="{% url 'quotation:final_quotation' q.pk %}"><i class="bi bi-plus-square"></i> Quotation</a></li> {% endcomment %}
-                      {% comment %} <li><a class="dropdown-item" href="{% url 'quotation:html_to_pdf_view' q.pk %}"><i class="bi bi-plus-square"></i> Print PDF</a></li> {% endcomment %}
-                      <li><a class="dropdown-item" href="{% url 'quotation:contract_update' c.pk %}"><i class="bi bi-pencil-fill"></i> Edit</a></li>
-                      <li><a class="dropdown-item" href="{% url 'quotation:contract_delete' c.pk %}"><i style = "color: rgb(180, 28, 28);" class="bi bi-trash"></i> Delete</a></li>
-                    </ul>
-                  </div></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-<!-- Pagination Start -->
+    <div class="container-fluid">
+        <div class="row align-items-start" style="margin-top: 20px;">
+            <div class="col" >
+                <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border:0.5px solid rgb(204, 204, 204)">
+                    <div class="container-fluid">
+                      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+                          <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Channel
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                {% for status in list_status %}
+                                <li><a class="dropdown-item" href="{% url 'report:report_contract' status.pk %}">{{ status }}</a></li>
+                                {% endfor %}
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </nav>
+                <table class="table bg-light" style="border:0.5px solid rgb(204, 204, 204); margin-top: 10px;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" class="table-dark">Number</th>
+                            <th scope="col" class="table-dark">Contract Number</th>
+                            <th scope="col" class="table-dark">Customer</th>
+                            <th scope="col" class="table-dark">Channel</th>
+                            <th scope="col" class="table-dark">Date</th>
+                            <th scope="col" class="table-dark">Status</th>
+                            <th scope="col" class="table-dark"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in contracts %}
+                        <tr>
+                            <th scope="row">{{ c.id }}</th>
+                            <td>{{ c.contract_no }}</td>
+                            <td class="text-dark">{{ c.customer_id }}</td>
+                            <td>{{ c.customer_id.channel }}</td>
+                            <td>{{ c.contract_date }}</td>
+                            <td>{{ c.contract_status }}</td>
+                            <td><div class="dropdown">
+                                <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-tools"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                  {% comment %} <li><a class="dropdown-item" href="{% url 'quotation:quotation_product_input' q.pk %}"><i class="bi bi-plus-square"></i> Add product to quotation</a></li> {% endcomment %}
+                                  {% comment %} <li><a class="dropdown-item" href="{% url 'quotation:final_quotation' q.pk %}"><i class="bi bi-plus-square"></i> Quotation</a></li> {% endcomment %}
+                                  {% comment %} <li><a class="dropdown-item" href="{% url 'quotation:html_to_pdf_view' q.pk %}"><i class="bi bi-plus-square"></i> Print PDF</a></li> {% endcomment %}
+                                  <li><a class="dropdown-item" href="{% url 'quotation:contract_update' c.pk %}"><i class="bi bi-pencil-fill"></i> Edit</a></li>
+                                  <li><a class="dropdown-item" href="{% url 'quotation:contract_delete' c.pk %}"><i style = "color: rgb(180, 28, 28);" class="bi bi-trash"></i> Delete</a></li>
+                                </ul>
+                              </div></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <!-- Pagination Start -->
 <div class="col-md-12">
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
@@ -145,6 +140,107 @@
         </ul>
     </nav>
 </div>
+            </div>
+            <div class="col" >
+                <table class="table bg-light" style="border:0.5px solid rgb(204, 204, 204); margin-top: 10px;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" class="table-dark">Number</th>
+                            <th scope="col" class="table-dark">Contract Number</th>
+                            <th scope="col" class="table-dark">Customer</th>
+                            <th scope="col" class="table-dark">Channel</th>
+                            <th scope="col" class="table-dark">Date</th>
+                            <th scope="col" class="table-dark">Status</th>
+                            <th scope="col" class="table-dark"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in contracts %}
+                        <tr>
+                            <th scope="row">{{ c.id }}</th>
+                            <td>{{ c.contract_no }}</td>
+                            <td class="text-dark">{{ c.customer_id }}</td>
+                            <td>{{ c.customer_id.channel }}</td>
+                            <td>{{ c.contract_date }}</td>
+                            <td>{{ c.contract_status }}</td>
+                            <td><div class="dropdown">
+                                <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-tools"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                  {% comment %} <li><a class="dropdown-item" href="{% url 'quotation:quotation_product_input' q.pk %}"><i class="bi bi-plus-square"></i> Add product to quotation</a></li> {% endcomment %}
+                                  {% comment %} <li><a class="dropdown-item" href="{% url 'quotation:final_quotation' q.pk %}"><i class="bi bi-plus-square"></i> Quotation</a></li> {% endcomment %}
+                                  {% comment %} <li><a class="dropdown-item" href="{% url 'quotation:html_to_pdf_view' q.pk %}"><i class="bi bi-plus-square"></i> Print PDF</a></li> {% endcomment %}
+                                  <li><a class="dropdown-item" href="{% url 'quotation:contract_update' c.pk %}"><i class="bi bi-pencil-fill"></i> Edit</a></li>
+                                  <li><a class="dropdown-item" href="{% url 'quotation:contract_delete' c.pk %}"><i style = "color: rgb(180, 28, 28);" class="bi bi-trash"></i> Delete</a></li>
+                                </ul>
+                              </div></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <!-- Pagination Start -->
+<div class="col-md-12">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+
+            {% if contracts.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ contracts.previous_page_number }}{% if request.GET.contract_no %}&contract_no={{ request.GET.contract_no }}{% endif %}" tabindex="-1">Previous</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+            {% endif %}
+
+            {% if contracts.number > 5 %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            {% endif %}
+
+            {% for i in contracts.paginator.page_range %}
+                {% if i > contracts.number|add:"-5" %}
+                    {% if i < contracts.number|add:"5" %}
+                        {% if contracts.number == i %}
+                            <li class="page-item active">
+                                <a class="page-link" href="?page={{ i }}{% if request.GET.contract_no %}&contract_no={{ request.GET.contract_no }}{% endif %}">{{ i }}</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ i }}{% if request.GET.contract_no %}&contract_no={{ request.GET.contract_no }}{% endif %}">{{ i }}</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {% if contracts.number < contracts.paginator.num_pages|add:"-4" %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            {% endif %}
+
+            {% if contracts.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ contracts.next_page_number }}{% if request.GET.contract_no %}&contract_no={{ request.GET.contract_no }}{% endif %}">Next</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            {% endif %}
+
+        </ul>
+    </nav>
+</div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
 
 
 <!-- Modals -->
@@ -346,7 +442,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" name="btncontractupdate" value="Contract update" style="background-color: #9b1b14;">Create</button>
+                <button type="submit" class="btn btn-primary" name="btncontractupdate" value="Contract update" style="background-color: #9b1b14;">Create contract</button>
             </div>
             </form>
         </div>

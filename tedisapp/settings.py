@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'sale_agreement',
     'sale_management',
     'quotation',
+    'report',
 ]
 
 MIDDLEWARE = [
@@ -82,23 +83,23 @@ WSGI_APPLICATION = 'tedisapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tedis_sales_contract_staging',
-        'USER': 'tedis_admin_staging',
-        'PASSWORD': '2d3JFqzFB2rrVwvs',
-        'HOST': '139.59.232.53',
-        'PORT': '3306',
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'mydatabase.sqlite3',
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'tedis_sales_contract_staging',
+#         'USER': 'tedis_admin_staging',
+#         'PASSWORD': '2d3JFqzFB2rrVwvs',
+#         'HOST': '139.59.232.53',
+#         'PORT': '3306',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'mydatabase.sqlite3',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -161,5 +162,3 @@ REST_FRAMEWORK = {
 }
 
 
-# Cart
-CART_SESSION_ID = 'quotation_product' # quotation ở đây đặt như thế nào cũng đc để sau này gọi tên biến ở các file view ra

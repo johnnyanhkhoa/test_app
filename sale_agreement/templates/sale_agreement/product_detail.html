@@ -167,7 +167,10 @@
             </div>
         </div>
     </div>
-
+<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 20px; margin-bottom: 20px; margin-right: 20px">
+    <a class="btn btn-secondary" href="{% url 'sale_management:product1' 0 %}" role="button">Close</a>
+    <a class="btn btn-secondary" href="{% url 'sale_management:product_update' product.pk %}" role="button" style="background-color: #9b1b14;">Edit</a>
+</div>
 
 
     {% endblock %}

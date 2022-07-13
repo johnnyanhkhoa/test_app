@@ -28,6 +28,7 @@ urlpatterns = [
     path('', include('sale_agreement.urls')),
     path('', include('sale_management.urls')),
     path('', include('quotation.urls')),
+    path('', include('report.urls')),
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/', include(router.urls)),
