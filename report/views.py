@@ -62,3 +62,19 @@ def report_contract(request, pk):
         'contracts_huy' : contracts_huy_pager,
     })
 
+def contract_follow_up(request, pk):
+    # Contract
+    contract = Contract.objects.get(pk=pk)
+    
+    # Contract follow up
+    form_follow_up = ContractFollowupForm(instance=contract)
+    if request.method == 'POST':
+        form_follow_up = ContractFollowupForm(request.POST, instance=contract)
+        if form_follow_up.is_valid():
+            form_follow_up.save()
+            return redirect('/report_contract/0/')
+    
+    return render(request, 'report/form_contract_follow_up.html', {
+        'contract' : contract,
+        'form_follow_up' : form_follow_up,
+    })
