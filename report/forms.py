@@ -20,5 +20,17 @@ class ContractFollowupForm(forms.ModelForm):
         fields = ['contract_status','status_date']
         
 
+class QuotationFollowupForm(forms.ModelForm):
+    quotation_status = forms.ModelChoiceField(required=False, queryset=statuses ,widget=forms.Select(attrs={
+        "class": "form-control bg-white", "placeholder": "Customer name",
+    }))
+    status_date = forms.DateField(required=False, widget=forms.SelectDateWidget(attrs={
+         "placeholder": "Quotation date",
+    }))
+    class Meta:
+        model = Quotation
+        fields = ['quotation_status','status_date']
+        
+
         
 

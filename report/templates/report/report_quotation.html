@@ -1,0 +1,451 @@
+{% extends 'sale_agreement/_Master.html' %}
+{% block title_tab %}Sales app | Report{% endblock %}
+{% load static %}
+{% load humanize %}
+
+{% block main_content %}
+<div class="container-fluid pt-4 px-4">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border:0.5px solid rgb(204, 204, 204);">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold text-dark" href="{% url 'report:report_quotation' 0 %}">Report</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 30px">
+                <ul class="nav nav-pills me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                          <a class="nav-link text-dark fw-bold" href="{% url 'report:report_contract' 0 %}">Sale contract</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link bg-dark fw-bold active" aria-current="page" href="#">Quotation</a>
+                        </li>
+                </ul>
+                <form method="get" action="{% url 'quotation:search_contract' %}">
+                    <div class="search">
+                        <input type="text" name="contract_no" value="{{ contract_no }}" placeholder="Search keyword...">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row align-items-start" style="margin-top: 20px;">
+            <div class="col" >
+                <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border:0.5px solid rgb(204, 204, 204)">
+                    <div class="container-fluid">
+                      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+                          <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Channel
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="{% url 'report:report_quotation' 0 %}">All channel</a></li>
+                                {% for channel in list_channel %}
+                                <li><a class="dropdown-item" href="{% url 'report:report_quotation' channel.pk %}">{{ channel }}</a></li>
+                                {% endfor %}
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </nav>
+                <table class="table bg-light" style="border:0.5px solid rgb(204, 204, 204); margin-top: 10px;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" class="table-dark">Quotation number</th>
+                            <th scope="col" class="table-dark">Customer</th>
+                            <th scope="col" class="table-dark">Channel</th>
+                            <th scope="col" class="table-dark">Date</th>
+                            <th scope="col" class="table-dark">Status</th>
+                            <th scope="col" class="table-dark"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in quotations %}
+                        <tr>
+                            <td>{{ c.quotation_no }}</td>
+                            <td class="text-dark">{{ c.customer_id }}</td>
+                            <td>{{ c.customer_id.channel }}</td>
+                            <td>{{ c.quotation_date }}</td>
+                            <td class="text-dark">{{ c.quotation_status }}</td>
+                            <td><div class="dropdown">
+                                <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-tools"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                  <li><a class="dropdown-item" href="{% url 'report:quotation_follow_up' c.pk %}"><i class="bi bi-calendar-check"></i> Follow up</a></li>
+                                </ul>
+                              </div></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <!-- Pagination Start -->
+<div class="col-md-12">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+
+            {% if quotations.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ quotations.previous_page_number }}{% if request.GET.quotation_no %}&quotation_no={{ request.GET.quotation_no }}{% endif %}" tabindex="-1">Previous</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+            {% endif %}
+
+            {% if quotations.number > 5 %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            {% endif %}
+
+            {% for i in quotations.paginator.page_range %}
+                {% if i > quotations.number|add:"-5" %}
+                    {% if i < quotations.number|add:"5" %}
+                        {% if quotations.number == i %}
+                            <li class="page-item active">
+                                <a class="page-link" href="?page={{ i }}{% if request.GET.quotation_no %}&quotation_no={{ request.GET.quotation_no }}{% endif %}">{{ i }}</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ i }}{% if request.GET.quotation_no %}&quotation_no={{ request.GET.quotation_no }}{% endif %}">{{ i }}</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {% if quotations.number < quotations.paginator.num_pages|add:"-4" %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            {% endif %}
+
+            {% if quotations.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ quotations.next_page_number }}{% if request.GET.quotation_no %}&quotation_no={{ request.GET.quotation_no }}{% endif %}">Next</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            {% endif %}
+
+        </ul>
+    </nav>
+</div>
+            </div>
+            <div class="col" >
+                <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border:0.5px solid rgb(204, 204, 204)">
+                    <div class="container-fluid">
+                      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+                          <li class="nav-item">
+                            <a class="nav-link fw-bold text-dark" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Đã chuyển khách hàng
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </nav>
+                <table class="table bg-light" style="border:0.5px solid rgb(204, 204, 204); margin-top: 10px;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" class="table-dark">Quotation number</th>
+                            <th scope="col" class="table-dark">Customer</th>
+                            <th scope="col" class="table-dark">Channel</th>
+                            <th scope="col" class="table-dark">Date</th>
+                            <th scope="col" class="table-dark">Status</th>
+                            <th scope="col" class="table-dark"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in quotations_da_chuyen_khach_hang %}
+                        <tr>
+                            <td>{{ c.quotation_no }}</td>
+                            <td class="text-dark">{{ c.customer_id }}</td>
+                            <td>{{ c.customer_id.channel }}</td>
+                            <td>{{ c.quotation_date }}</td>
+                            <td class="text-dark">{{ c.quotation_status }}</td>
+                            <td><div class="dropdown">
+                                <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-tools"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="{% url 'report:quotation_follow_up' c.pk %}"><i class="bi bi-calendar-check"></i> Follow up</a></li>
+                                </ul>
+                              </div></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <!-- Pagination Start -->
+<div class="col-md-12">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+
+            {% if quotations_da_chuyen_khach_hang.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ quotations_da_chuyen_khach_hang.previous_page_number }}{% if request.GET.quotation_no %}&quotation_no={{ request.GET.quotation_no }}{% endif %}" tabindex="-1">Previous</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+            {% endif %}
+
+            {% if quotations_da_chuyen_khach_hang.number > 5 %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            {% endif %}
+
+            {% for i in quotations_da_chuyen_khach_hang.paginator.page_range %}
+                {% if i > quotations_da_chuyen_khach_hang.number|add:"-5" %}
+                    {% if i < quotations_da_chuyen_khach_hang.number|add:"5" %}
+                        {% if quotations_da_chuyen_khach_hang.number == i %}
+                            <li class="page-item active">
+                                <a class="page-link" href="?page={{ i }}{% if request.GET.quotation_no %}&quotation_no={{ request.GET.quotation_no }}{% endif %}">{{ i }}</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ i }}{% if request.GET.quotation_no %}&quotation_no={{ request.GET.quotation_no }}{% endif %}">{{ i }}</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {% if quotations_da_chuyen_khach_hang.number < quotations_da_chuyen_khach_hang.paginator.num_pages|add:"-4" %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            {% endif %}
+
+            {% if quotations_da_chuyen_khach_hang.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ quotations_da_chuyen_khach_hang.next_page_number }}{% if request.GET.quotation_no %}&quotation_no={{ request.GET.quotation_no }}{% endif %}">Next</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            {% endif %}
+
+        </ul>
+    </nav>
+</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="border:0.5px solid rgb(204, 204, 204)">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link fw-bold text-dark" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Đã ký
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+<table class="table bg-light" style="border:0.5px solid rgb(204, 204, 204); margin-top: 10px;">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col" class="table-dark">Quotation number</th>
+            <th scope="col" class="table-dark">Customer</th>
+            <th scope="col" class="table-dark">Channel</th>
+            <th scope="col" class="table-dark">Date</th>
+            <th scope="col" class="table-dark">Status</th>
+            <th scope="col" class="table-dark"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in quotations_da_ky %}
+        <tr>
+            <td>{{ c.quotation_no }}</td>
+            <td class="text-dark">{{ c.customer_id }}</td>
+            <td>{{ c.customer_id.channel }}</td>
+            <td>{{ c.quotation_date }}</td>
+            <td class="text-dark">{{ c.quotation_status }}</td>
+            <td><div class="dropdown">
+                <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-tools"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="{% url 'report:quotation_follow_up' c.pk %}"><i class="bi bi-calendar-check"></i> Follow up</a></li>
+                </ul>
+              </div></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<!-- Pagination Start -->
+<div class="col-md-12">
+<nav aria-label="Page navigation example">
+<ul class="pagination justify-content-center">
+
+{% if quotations_da_ky.has_previous %}
+<li class="page-item">
+    <a class="page-link" href="?page={{ quotations_da_ky.previous_page_number }}{% if request.GET.quotation_no %}&quotation_no={{ request.GET.quotation_no }}{% endif %}" tabindex="-1">Previous</a>
+</li>
+{% else %}
+<li class="page-item disabled">
+    <a class="page-link" href="#" tabindex="-1">Previous</a>
+</li>
+{% endif %}
+
+{% if quotations_da_ky.number > 5 %}
+<li class="page-item disabled">
+    <a class="page-link" href="#">...</a>
+</li>
+{% endif %}
+
+{% for i in quotations_da_ky.paginator.page_range %}
+{% if i > quotations_da_ky.number|add:"-5" %}
+    {% if i < quotations_da_ky.number|add:"5" %}
+        {% if quotations_da_ky.number == i %}
+            <li class="page-item active">
+                <a class="page-link" href="?page={{ i }}{% if request.GET.quotation_no %}&quotation_no={{ request.GET.quotation_no }}{% endif %}">{{ i }}</a>
+            </li>
+        {% else %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ i }}{% if request.GET.quotation_no %}&quotation_no={{ request.GET.quotation_no }}{% endif %}">{{ i }}</a>
+            </li>
+        {% endif %}
+    {% endif %}
+{% endif %}
+{% endfor %}
+
+{% if quotations_da_ky.number < quotations_da_ky.paginator.num_pages|add:"-4" %}
+<li class="page-item disabled">
+    <a class="page-link" href="#">...</a>
+</li>
+{% endif %}
+
+{% if quotations_da_ky.has_next %}
+<li class="page-item">
+    <a class="page-link" href="?page={{ quotations_da_ky.next_page_number }}{% if request.GET.quotation_no %}&quotation_no={{ request.GET.quotation_no }}{% endif %}">Next</a>
+</li>
+{% else %}
+<li class="page-item disabled">
+    <a class="page-link" href="#">Next</a>
+</li>
+{% endif %}
+
+</ul>
+</nav>
+</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="border:0.5px solid rgb(204, 204, 204)">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link fw-bold text-dark" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Hủy
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+<table class="table bg-light" style="border:0.5px solid rgb(204, 204, 204); margin-top: 10px;">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col" class="table-dark">Quotation number</th>
+            <th scope="col" class="table-dark">Customer</th>
+            <th scope="col" class="table-dark">Channel</th>
+            <th scope="col" class="table-dark">Date</th>
+            <th scope="col" class="table-dark">Status</th>
+            <th scope="col" class="table-dark"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in quotations_huy %}
+        <tr>
+            <td>{{ c.quotation_no }}</td>
+            <td class="text-dark">{{ c.customer_id }}</td>
+            <td>{{ c.customer_id.channel }}</td>
+            <td>{{ c.quotation_date }}</td>
+            <td class="text-dark">{{ c.quotation_status }}</td>
+            <td><div class="dropdown">
+                <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-tools"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="{% url 'report:quotation_follow_up' c.pk %}"><i class="bi bi-calendar-check"></i> Follow up</a></li>
+                </ul>
+              </div></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<!-- Pagination Start -->
+<div class="col-md-12">
+<nav aria-label="Page navigation example">
+<ul class="pagination justify-content-center">
+
+{% if quotations_huy.has_previous %}
+<li class="page-item">
+    <a class="page-link" href="?page={{ quotations_huy.previous_page_number }}{% if request.GET.quotation_no %}&quotation_no={{ request.GET.quotation_no }}{% endif %}" tabindex="-1">Previous</a>
+</li>
+{% else %}
+<li class="page-item disabled">
+    <a class="page-link" href="#" tabindex="-1">Previous</a>
+</li>
+{% endif %}
+
+{% if quotations_huy.number > 5 %}
+<li class="page-item disabled">
+    <a class="page-link" href="#">...</a>
+</li>
+{% endif %}
+
+{% for i in quotations_huy.paginator.page_range %}
+{% if i > quotations_huy.number|add:"-5" %}
+    {% if i < quotations_huy.number|add:"5" %}
+        {% if quotations_huy.number == i %}
+            <li class="page-item active">
+                <a class="page-link" href="?page={{ i }}{% if request.GET.quotation_no %}&quotation_no={{ request.GET.quotation_no }}{% endif %}">{{ i }}</a>
+            </li>
+        {% else %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ i }}{% if request.GET.quotation_no %}&quotation_no={{ request.GET.quotaquotation_noion_no }}{% endif %}">{{ i }}</a>
+            </li>
+        {% endif %}
+    {% endif %}
+{% endif %}
+{% endfor %}
+
+{% if quotations_huy.number < quotations_huy.paginator.num_pages|add:"-4" %}
+<li class="page-item disabled">
+    <a class="page-link" href="#">...</a>
+</li>
+{% endif %}
+
+{% if quotations_huy.has_next %}
+<li class="page-item">
+    <a class="page-link" href="?page={{ quotations_huy.next_page_number }}{% if request.GET.quotation_no %}&quotation_no={{ request.GET.quotation_no }}{% endif %}">Next</a>
+</li>
+{% else %}
+<li class="page-item disabled">
+    <a class="page-link" href="#">Next</a>
+</li>
+{% endif %}
+
+</ul>
+</nav>
+</div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+
+
+
+
+{% endblock %}

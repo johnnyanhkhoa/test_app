@@ -167,24 +167,6 @@ def quotation_product_input(request, pk):
     })
     
 
-def quotation_follow_up(request, pk):
-    # Quotation
-    quotation = Quotation.objects.get(pk=pk)
-    
-    # Edit customer
-    form_follow_up = QuotationFollowupForm(instance=quotation)
-    if request.method == 'POST':
-        form_follow_up = QuotationFollowupForm(request.POST, instance=quotation)
-        if form_follow_up.is_valid():
-            form_follow_up.save()
-            return redirect('/quotation-list-channel/0/')
-    
-    return render(request, 'quotation/form_quotation_follow_up.html', {
-        'quotation' : quotation,
-        'form_follow_up' : form_follow_up,
-    })
-
-
 def search_quotation(request):
     # Kiểm tra session xem khách hàng đã đăng nhập chưa?
     if 's_user' not in request.session:
@@ -195,8 +177,6 @@ def search_quotation(request):
     
     # Đọc danh sách Status
     list_status = Status.objects.order_by('status')
-    
-    
     
     # Tìm kiếm
     quotations = []

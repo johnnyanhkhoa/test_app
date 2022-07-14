@@ -14,7 +14,7 @@
                           <a class="nav-link bg-dark fw-bold active" aria-current="page" href="#">Sale contract</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link text-dark fw-bold" href="#">Quotation</a>
+                          <a class="nav-link text-dark fw-bold" href="{% url 'report:report_quotation' 0 %}">Quotation</a>
                         </li>
                 </ul>
                 <form method="get" action="{% url 'quotation:search_contract' %}">
@@ -51,7 +51,6 @@
                 <table class="table bg-light" style="border:0.5px solid rgb(204, 204, 204); margin-top: 10px;">
                     <thead class="thead-dark">
                         <tr>
-                            <th scope="col" class="table-dark">Number</th>
                             <th scope="col" class="table-dark">Contract Number</th>
                             <th scope="col" class="table-dark">Customer</th>
                             <th scope="col" class="table-dark">Channel</th>
@@ -63,18 +62,16 @@
                     <tbody>
                         {% for c in contracts %}
                         <tr>
-                            <th scope="row">{{ c.id }}</th>
                             <td>{{ c.contract_no }}</td>
                             <td class="text-dark">{{ c.customer_id }}</td>
                             <td>{{ c.customer_id.channel }}</td>
                             <td>{{ c.contract_date }}</td>
-                            <td>{{ c.contract_status }}</td>
+                            <td class="text-dark">{{ c.contract_status }}</td>
                             <td><div class="dropdown">
                                 <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-tools"></i>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="{% url 'quotation:contract_update' c.pk %}"><i class="bi bi-pencil-fill"></i> Edit</a></li>
                                   <li><a class="dropdown-item" href="{% url 'report:contract_follow_up' c.pk %}"><i class="bi bi-calendar-check"></i> Follow up</a></li>
                                 </ul>
                               </div></td>
@@ -156,7 +153,6 @@
                 <table class="table bg-light" style="border:0.5px solid rgb(204, 204, 204); margin-top: 10px;">
                     <thead class="thead-dark">
                         <tr>
-                            <th scope="col" class="table-dark">Number</th>
                             <th scope="col" class="table-dark">Contract Number</th>
                             <th scope="col" class="table-dark">Customer</th>
                             <th scope="col" class="table-dark">Channel</th>
@@ -168,12 +164,11 @@
                     <tbody>
                         {% for c in contracts_da_chuyen_khach_hang %}
                         <tr>
-                            <th scope="row">{{ c.id }}</th>
                             <td>{{ c.contract_no }}</td>
                             <td class="text-dark">{{ c.customer_id }}</td>
                             <td>{{ c.customer_id.channel }}</td>
                             <td>{{ c.contract_date }}</td>
-                            <td>{{ c.contract_status }}</td>
+                            <td class="text-dark">{{ c.contract_status }}</td>
                             <td><div class="dropdown">
                                 <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-tools"></i>
@@ -258,7 +253,6 @@
 <table class="table bg-light" style="border:0.5px solid rgb(204, 204, 204); margin-top: 10px;">
     <thead class="thead-dark">
         <tr>
-            <th scope="col" class="table-dark">Number</th>
             <th scope="col" class="table-dark">Contract Number</th>
             <th scope="col" class="table-dark">Customer</th>
             <th scope="col" class="table-dark">Channel</th>
@@ -270,12 +264,11 @@
     <tbody>
         {% for c in contracts_da_ky %}
         <tr>
-            <th scope="row">{{ c.id }}</th>
             <td>{{ c.contract_no }}</td>
             <td class="text-dark">{{ c.customer_id }}</td>
             <td>{{ c.customer_id.channel }}</td>
             <td>{{ c.contract_date }}</td>
-            <td>{{ c.contract_status }}</td>
+            <td class="text-dark">{{ c.contract_status }}</td>
             <td><div class="dropdown">
                 <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-tools"></i>
@@ -360,7 +353,6 @@
 <table class="table bg-light" style="border:0.5px solid rgb(204, 204, 204); margin-top: 10px;">
     <thead class="thead-dark">
         <tr>
-            <th scope="col" class="table-dark">Number</th>
             <th scope="col" class="table-dark">Contract Number</th>
             <th scope="col" class="table-dark">Customer</th>
             <th scope="col" class="table-dark">Channel</th>
@@ -372,12 +364,11 @@
     <tbody>
         {% for c in contracts_huy %}
         <tr>
-            <th scope="row">{{ c.id }}</th>
             <td>{{ c.contract_no }}</td>
             <td class="text-dark">{{ c.customer_id }}</td>
             <td>{{ c.customer_id.channel }}</td>
             <td>{{ c.contract_date }}</td>
-            <td>{{ c.contract_status }}</td>
+            <td class="text-dark">{{ c.contract_status }}</td>
             <td><div class="dropdown">
                 <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-tools"></i>

@@ -17,6 +17,7 @@ class Status(models.Model):
     
 class Quotation(models.Model):
     customer_id = models.ForeignKey(Customer, on_delete=models.PROTECT, null=True)
+    channel = models.ForeignKey(Channel, on_delete=models.PROTECT, null=True)
     quotation_no = models.CharField(max_length=50, null=True)
     quotation_date = models.DateField(null=True, default=today)
     quotation_status = models.ForeignKey(Status, on_delete=models.PROTECT, null=True)

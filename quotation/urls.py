@@ -10,7 +10,6 @@ urlpatterns = [
     path('quotation_update/<int:pk>/', views.quotation_update, name='quotation_update'),
     path('quotation_delete/<int:pk>/', views.quotation_delete, name='quotation_delete'),
     path('add_product_to_quotation/<int:pk>/', views.quotation_product_input, name='quotation_product_input'),
-    path('quotation_follow_up/<int:pk>/', views.quotation_follow_up, name='quotation_follow_up'),
     path('quotation_product_delete/<int:pk>/', views.quotation_product_delete, name='quotation_product_delete'),
     path('quotation/<int:pk>/', views.final_quotation, name='final_quotation'),
     path('quotation_pdf/<int:pk>/', views.html_to_pdf_view, name='html_to_pdf_view'),

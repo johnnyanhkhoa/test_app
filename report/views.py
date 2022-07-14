@@ -78,3 +78,75 @@ def contract_follow_up(request, pk):
         'contract' : contract,
         'form_follow_up' : form_follow_up,
     })
+
+def report_quotation(request, pk):
+    # Kiểm tra session xem khách hàng đã đăng nhập chưa?
+    if 's_user' not in request.session:
+        return redirect('sale_agreement:signin')
+    
+    # Đọc danh sách Channel
+    list_channel = Channel.objects.order_by('channel_name')
+    
+    # Đọc danh sách Status
+    list_status = Status.objects.order_by('status')
+    
+    # Đọc danh sách all quotation theo channel
+    if pk == 0:
+        quotations = Quotation.objects.filter(quotation_status=None).order_by('quotation_no')
+    else:
+        quotations = Quotation.objects.filter(channel=pk).order_by('quotation_no')
+
+    # Phân trang all quotation
+    page = request.GET.get('page', 1)
+    paginator = Paginator(quotations, 15)
+    quotation_pager = paginator.page(page)
+            
+    # Đọc danh sách "đã chuyển khách hàng" quotation
+    quotations_da_chuyen_khach_hang = Quotation.objects.filter(quotation_status=1).order_by('quotation_no')
+
+    # Phân trang "đã chuyển khách hàng" quotation
+    page = request.GET.get('page', 1)
+    paginator = Paginator(quotations_da_chuyen_khach_hang, 15)
+    quotations_da_chuyen_khach_hang_pager = paginator.page(page)
+    
+    # Đọc danh sách "đã ký" quotation
+    quotations_da_ky = Quotation.objects.filter(quotation_status=2).order_by('quotation_no')
+
+    # Phân trang "đã ký" quotation
+    page = request.GET.get('page', 1)
+    paginator = Paginator(quotations_da_ky, 15)
+    quotations_da_ky_pager = paginator.page(page)
+    
+    # Đọc danh sách "hủy" quotation
+    quotations_huy = Quotation.objects.filter(quotation_status=3).order_by('quotation_no')
+
+    # Phân trang "hủy" quotation
+    page = request.GET.get('page', 1)
+    paginator = Paginator(quotations_huy, 15)
+    quotations_huy_pager = paginator.page(page)
+    
+    return render(request, 'report/report_quotation.html', {
+        'list_channel' : list_channel,
+        'list_status' : list_status,
+        'quotations' : quotation_pager,
+        'quotations_da_chuyen_khach_hang' : quotations_da_chuyen_khach_hang_pager,
+        'quotations_da_ky' : quotations_da_ky_pager,
+        'quotations_huy' : quotations_huy_pager,
+    })
+
+def quotation_follow_up(request, pk):
+    # Quotation
+    quotation = Quotation.objects.get(pk=pk)
+    
+    # Edit customer
+    form_follow_up = QuotationFollowupForm(instance=quotation)
+    if request.method == 'POST':
+        form_follow_up = QuotationFollowupForm(request.POST, instance=quotation)
+        if form_follow_up.is_valid():
+            form_follow_up.save()
+            return redirect('/report_quotation/0/')
+    
+    return render(request, 'report/form_quotation_follow_up.html', {
+        'quotation' : quotation,
+        'form_follow_up' : form_follow_up,
+    })
