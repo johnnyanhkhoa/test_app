@@ -15,6 +15,9 @@ class CreateQuotationForm(forms.ModelForm):
     customer_id = forms.ModelChoiceField(required=False, queryset=customers ,widget=forms.Select(attrs={
         "class": "form-control bg-white", "placeholder": "Customer name",
     }))
+    channel = forms.ModelChoiceField(required=False, queryset=channels ,widget=forms.Select(attrs={
+        "class": "form-control bg-white", "placeholder": "Channel",
+    }))
     quotation_no = forms.CharField(required=False, widget=forms.TextInput(attrs={
         "class": "form-control", "placeholder": "Quotation number",
     }))
@@ -26,7 +29,7 @@ class CreateQuotationForm(forms.ModelForm):
     }))
     class Meta:
         model = Quotation
-        fields = ['customer_id', 'quotation_no', 'quotation_date', 'quotation_remark']
+        fields = ['customer_id', 'channel', 'quotation_no', 'quotation_date', 'quotation_remark']
         
 class QuotationFollowupForm(forms.ModelForm):
     quotation_status = forms.ModelChoiceField(required=False, queryset=statuses ,widget=forms.Select(attrs={

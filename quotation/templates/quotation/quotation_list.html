@@ -70,7 +70,7 @@
                 <th scope="row">{{ q.id }}</th>
                 <td>{{ q.quotation_no }}</td>
                 <td class="text-dark">{{ q.customer_id }}</td>
-                <td>{{ q.customer_id.channel }}</td>
+                <td>{{ q.channel }}</td>
                 <td>{{ q.quotation_date }}</td>
                 <td>{{ q.quotation_status }}</td>
                 <td>{{ q.quotation_remark }}</td>
@@ -171,6 +171,10 @@
                   <label for="customer_id" class="col-form-label fw-bold text-dark">Customer</label>
                   {{ form.customer_id }}
               </div>
+              <div class="mb-3">
+                <label for="channel" class="col-form-label fw-bold text-dark">Channel</label>
+                {{ form.channel }}
+            </div>
               <div class="mb-3">
                   <label for="quotation_date" class="col-form-label fw-bold text-dark">Quotation Date</label>
                   {{ form.quotation_date }}

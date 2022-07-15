@@ -86,8 +86,6 @@ def quotation_list_channel(request, pk):
     if pk == 0:
         quotations = Quotation.objects.order_by('quotation_no')
     else:
-        customer_name = Customer.objects.get(customer_name=quotations.customer_id)
-        channel = customer_name.channel
         quotations = Quotation.objects.filter(channel=pk).order_by('quotation_no')
 
     # Phân trang
