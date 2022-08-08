@@ -19,5 +19,11 @@ urlpatterns = [
     path('search_contract/', views.search_contract, name='search_contract'),
     path('contract_update/<int:pk>/', views.contract_update, name='contract_update'),
     path('contract_delete/<int:pk>/', views.contract_delete, name='contract_delete'),
+    path('pdf/', views.render_pdf_view, name='render_pdf_view'),
     
+    path('vn_hop_dong_mua_ban_30_ngay/', views.vn_hop_dong_mua_ban_30_ngay, name='vn_hop_dong_mua_ban_30_ngay'),
+    path('vn_hop_dong_mua_ban_cod/', views.vn_hop_dong_mua_ban_cod, name='vn_hop_dong_mua_ban_cod'),
+    path('vn_hop_dong_mua_ban_nguyen_tac/', views.vn_hop_dong_mua_ban_nguyen_tac, name='vn_hop_dong_mua_ban_nguyen_tac'),
+    path('vn_phu_luc_hop_dong/', views.vn_phu_luc_hop_dong, name='vn_phu_luc_hop_dong'),
+    path('song_ngu_bien_ban_thanh_ly_hop_dong/', views.song_ngu_bien_ban_thanh_ly_hop_dong, name='song_ngu_bien_ban_thanh_ly_hop_dong'),
 ]

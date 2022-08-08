@@ -40,8 +40,8 @@ def signin(request):
             # Tạo session
             list_user_values = []
             # usn = user.values()[0][user_name]
-            print(list_user_values)
             request.session['s_user'] = user.values()[0]['user_name']
+            # print(user.values()[0]['user_name', 'user_full_name'])
             return redirect('sale_agreement:index')
         else:
             chuoi_kq_dang_nhap = '''

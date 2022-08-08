@@ -9,8 +9,9 @@ from django.core.paginator import Paginator
 import quotation
 from .models import *
 from .forms import *
-
-
+import os
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 # Create your views here.
 
 # QUOTATION
@@ -86,8 +87,8 @@ def quotation_list_channel(request, pk):
     if pk == 0:
         quotations = Quotation.objects.order_by('quotation_no')
     else:
-        customer_name = Customer.objects.get(customer_name=quotations.customer_id)
-        channel = customer_name.channel
+        # customer_name = Customer.objects.get(customer_name=quotations.customer_id)
+        # channel = customer_name.channel
         quotations = Quotation.objects.filter(channel=pk).order_by('quotation_no')
 
     # Phân trang
@@ -233,7 +234,7 @@ def html_to_pdf_view(request, pk):
     quotation = Quotation.objects.get(pk=pk) 
     quotation_products = Quotation_product.objects.filter(quotation_id=pk)
 
-    html_string = render_to_string('quotation/final_quotation.html', {
+    html_string = render_to_string('quotation/vn_hop_dong_mua_ban_cod.html', {
         'today': today,
         'quotation': quotation,
         'quotation_products': quotation_products,
@@ -261,8 +262,8 @@ def html_to_pdf_view(request, pk):
     config = pdfkit.configuration(wkhtmltopdf=config_path)
     
     filename = 'report_' + datetime.now().strftime('%Y%m%d_%H%M%S') + '.pdf'
-    # pdfkit.from_string(html_string, os.path.join(os.path.expanduser('~'), 'Documents', filename), configuration=config)
-    pdfkit.from_string(html_string, "E:\\" + filename, configuration=config, options=options)
+    pdfkit.from_string(html_string, os.path.join(os.path.expanduser('~'), 'Documents', filename), configuration=config)
+    # pdfkit.from_string(html_string, "E:\\" + filename, configuration=config, options=options)
     # if not pdf.err:
         # return HttpResponse(result.getvalue(), content_type='application/pdf')
 
@@ -275,6 +276,25 @@ def contract(request):
     
     return render(request, 'quotation/contract_1.html')
 
+def vn_hop_dong_mua_ban_30_ngay(request):
+    
+    return render(request, 'quotation/vn_hop_dong_mua_ban_30_ngay.html')
+
+def vn_hop_dong_mua_ban_cod(request):
+    
+    return render(request, 'quotation/vn_hop_dong_mua_ban_cod.html')
+
+def vn_hop_dong_mua_ban_nguyen_tac(request):
+    
+    return render(request, 'quotation/vn_hop_dong_mua_ban_nguyen_tac.html')
+
+def vn_phu_luc_hop_dong(request):
+    
+    return render(request, 'quotation/vn_phu_luc_hop_dong.html')
+
+def song_ngu_bien_ban_thanh_ly_hop_dong(request):
+    
+    return render(request, 'quotation/song_ngu_bien_ban_thanh_ly_hop_dong.html')
 
 def contract_list_status(request, pk):
     # Kiểm tra session xem khách hàng đã đăng nhập chưa?
@@ -418,3 +438,25 @@ def contract_delete(request, pk):
     contract_info.delete()
     return redirect('/contract-list-channel/0/')
 
+
+# TEST PDF #
+def render_pdf_view(request):
+    template_path = 'quotation/pdf1.html'
+    context = {'myvar': 'this is your template context'}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    # if download:
+    # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    # if display:
+    response['Content-Disposition'] = 'filename="report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
