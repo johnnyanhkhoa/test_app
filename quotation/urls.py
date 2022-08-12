@@ -26,4 +26,7 @@ urlpatterns = [
     path('vn_hop_dong_mua_ban_nguyen_tac/', views.vn_hop_dong_mua_ban_nguyen_tac, name='vn_hop_dong_mua_ban_nguyen_tac'),
     path('vn_phu_luc_hop_dong/', views.vn_phu_luc_hop_dong, name='vn_phu_luc_hop_dong'),
     path('song_ngu_bien_ban_thanh_ly_hop_dong/', views.song_ngu_bien_ban_thanh_ly_hop_dong, name='song_ngu_bien_ban_thanh_ly_hop_dong'),
+    path('song_ngu_phu_luc_chong_pha_gia/', views.song_ngu_phu_luc_chong_pha_gia, name='song_ngu_phu_luc_chong_pha_gia'),
+    path('song_ngu_phu_luc_bo_sung_sp/', views.song_ngu_phu_luc_bo_sung_sp, name='song_ngu_phu_luc_bo_sung_sp'),
+
 ]

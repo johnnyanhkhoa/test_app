@@ -87,11 +87,8 @@ def quotation_list_channel(request, pk):
     if pk == 0:
         quotations = Quotation.objects.order_by('quotation_no')
     else:
-<<<<<<< HEAD
         # customer_name = Customer.objects.get(customer_name=quotations.customer_id)
         # channel = customer_name.channel
-=======
->>>>>>> 10106ef7608e005d042b0ef3ed5431d07c1ba2e3
         quotations = Quotation.objects.filter(channel=pk).order_by('quotation_no')
 
     # Phân trang
@@ -298,6 +295,14 @@ def vn_phu_luc_hop_dong(request):
 def song_ngu_bien_ban_thanh_ly_hop_dong(request):
     
     return render(request, 'quotation/song_ngu_bien_ban_thanh_ly_hop_dong.html')
+
+def song_ngu_phu_luc_bo_sung_sp(request):
+    
+    return render(request, 'quotation/song_ngu_phu_luc_bo_sung_sp.html')
+
+def song_ngu_phu_luc_chong_pha_gia(request):
+    
+    return render(request, 'quotation/song_ngu_phu_luc_chong_pha_gia.html')
 
 def contract_list_status(request, pk):
     # Kiểm tra session xem khách hàng đã đăng nhập chưa?
