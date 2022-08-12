@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-jm+ql@h^zhl#a+pjd$55-3ye@32ghe9e*)j$wahxu)sv7s=v!9
 DEBUG = True
 
 # ALLOWED_HOSTS = ['tedis-saleagreement.herokuapp.com', '127.0.0.1', 'localhost']
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['167.99.64.156']
 
 
 # Application definition
