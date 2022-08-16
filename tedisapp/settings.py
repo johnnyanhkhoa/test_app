@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-jm+ql@h^zhl#a+pjd$55-3ye@32ghe9e*)j$wahxu)sv7s=v!9
 DEBUG = True
 
 # ALLOWED_HOSTS = ['tedis-saleagreement.herokuapp.com', '127.0.0.1', 'localhost']
-ALLOWED_HOSTS = ['167.99.64.156']
+ALLOWED_HOSTS = ['167.99.64.156', '.khoabubemi.click', 'localhost']
 
 
 # Application definition
@@ -93,12 +93,23 @@ WSGI_APPLICATION = 'tedisapp.wsgi.application'
 #         'PORT': '3306',
 #     }
 # }
-
+# if DEBUG:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / 'mydatabase.sqlite3',
+#         }
+#     }
+# else:
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'mydatabase.sqlite3',
-    }
+'default': {
+    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    'NAME': 'tedisappdb',
+    'USER': 'khoabuw',
+    'PASSWORD': 'johnnynessie2001',
+    'HOST': 'localhost',
+    'PORT': '',
+}
 }
 
 # Password validation
