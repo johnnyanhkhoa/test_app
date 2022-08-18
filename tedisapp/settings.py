@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-jm+ql@h^zhl#a+pjd$55-3ye@32ghe9e*)j$wahxu)sv7s=v!9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = ['tedis-saleagreement.herokuapp.com', '127.0.0.1', 'localhost']
 ALLOWED_HOSTS = ['159.223.84.65', '.khoabubemi.click', 'khoabubemi.click', 'localhost']
@@ -93,23 +93,23 @@ WSGI_APPLICATION = 'tedisapp.wsgi.application'
 #         'PORT': '3306',
 #     }
 # }
-if DEBUG == True:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'mydatabase.sqlite3',
-        }
-    }
-else:
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'myproject',
-        'USER': 'myprojectuser',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
+# if DEBUG == True:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / 'mydatabase.sqlite3',
+#         }
+#     }
+# else:
+DATABASES = {
+'default': {
+    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    'NAME': 'myproject',
+    'USER': 'myprojectuser',
+    'PASSWORD': 'password',
+    'HOST': 'localhost',
+    'PORT': '',
+}
 }
 
 # Password validation
