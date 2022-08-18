@@ -93,24 +93,24 @@ WSGI_APPLICATION = 'tedisapp.wsgi.application'
 #         'PORT': '3306',
 #     }
 # }
-# if DEBUG:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': BASE_DIR / 'mydatabase.sqlite3',
-#         }
-#     }
-# else:
-DATABASES = {
-'default': {
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': 'tedisappdb',
-    'USER': 'khoabuw',
-    'PASSWORD': 'johnnynessie2001',
-    'HOST': 'localhost',
-    'PORT': '',
-}
-}
+if DEBUG == True:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'mydatabase.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'myproject',
+        'USER': 'khoa',
+        'PASSWORD': 'khoa',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
