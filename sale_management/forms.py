@@ -1,6 +1,4 @@
-from tkinter.tix import Select
 from unicodedata import category
-from click import Choice
 from django import forms
 from django.forms import ModelForm, TextInput
 from .models import *
