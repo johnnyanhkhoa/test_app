@@ -53,7 +53,7 @@
                     <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <a href="{% url 'sale_agreement:index' %}" class="">
-                                <h4 class="text-primary">SALES AGREEMENT APPP</h4>
+                                <h4 class="text-dark">SALES AGREEMENT APP</h4>
                             </a>
                             <h4>Sign In</h4>
                         </div>
@@ -69,9 +69,9 @@
                             </div>
                             <div class="d-flex align-items-center justify-content-between mb-4">
                             </div>
-                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4" name="btnDangNhap" value="Đăng nhập">Sign In</button>
+                            <button type="submit" class="btn btn-dark py-3 w-100 mb-4" name="btnDangNhap" value="Đăng nhập">Sign In</button>
                         </form>
-                        <p class="text-center mb-0">Do not have an Account ? <a href="{% url 'sale_agreement:signup_changepassword' %}">Sign up</a></p>
+                        {% comment %} <p class="text-center mb-0">Do not have an Account ? <a href="{% url 'sale_agreement:signup_changepassword' %}">Sign up</a></p> {% endcomment %}
                     </div>
                 </div>
             </div>

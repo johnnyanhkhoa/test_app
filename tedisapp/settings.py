@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-jm+ql@h^zhl#a+pjd$55-3ye@32ghe9e*)j$wahxu)sv7s=v!9
 DEBUG = True
 
 # ALLOWED_HOSTS = ['tedis-saleagreement.herokuapp.com', '127.0.0.1', 'localhost']
-ALLOWED_HOSTS = ['159.223.84.65', '.khoabubemi.click', 'khoabubemi.click', 'localhost']
+ALLOWED_HOSTS = ['159.223.84.65', '.khoabubemi.click', 'khoabubemi.click', '127.0.0.1']
 
 
 # Application definition
@@ -93,24 +93,24 @@ WSGI_APPLICATION = 'tedisapp.wsgi.application'
 #         'PORT': '3306',
 #     }
 # }
-# if DEBUG == True:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': BASE_DIR / 'mydatabase.sqlite3',
-#         }
-#     }
-# else:
+
 DATABASES = {
-'default': {
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': 'myproject',
-    'USER': 'myprojectuser',
-    'PASSWORD': 'password',
-    'HOST': 'localhost',
-    'PORT': '',
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'mydatabase.sqlite3',
+    }
 }
-}
+
+# DATABASES = {
+# 'default': {
+#     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#     'NAME': 'myproject',
+#     'USER': 'myprojectuser',
+#     'PASSWORD': 'password',
+#     'HOST': 'localhost',
+#     'PORT': '',
+# }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
