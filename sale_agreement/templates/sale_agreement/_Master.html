@@ -57,11 +57,11 @@
         <div class="sidebar" style="background-color: #434343">
             <nav class="navbar navbar-light" style="background-color: #434343;">
                 <a href="{% url 'sale_agreement:index' %}" class="navbar-brand mx-4 mb-3">
-                    <!-- <img class="bg-white" src="{% static 'sale_agreement/img/logo_tedis.png' %}" alt=""
-                        style="width: 100px; height: 50px;"> -->
-                    <div class="fs-5" style="color: white; ">
+                    <img class="bg-white" src="{% static 'sale_agreement/img/logo_tedis.png' %}" alt=""
+                        style="width: 100px; height: 50px;">
+                    <!-- <div class="fs-5" style="color: white; ">
                         <b>Sale Agreement</b>
-                    </div>
+                    </div> -->
                 </a>
 
                 <div class="d-flex align-items-center ms-4 mb-4">
@@ -124,7 +124,8 @@
                 <div class="navbar-nav align-items-center ms-auto">
                     {% if request.session.s_user %}
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown">{{ request.session.s_user }}</a>
+                        <a href="#" class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown">
+                            {{ request.session.s_user }}</a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             {% comment %} <a href="#" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a> {% endcomment %}
