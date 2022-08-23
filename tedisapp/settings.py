@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-jm+ql@h^zhl#a+pjd$55-3ye@32ghe9e*)j$wahxu)sv7s=v!9
 DEBUG = True
 
 # ALLOWED_HOSTS = ['tedis-saleagreement.herokuapp.com', '127.0.0.1', 'localhost']
-ALLOWED_HOSTS = ['159.223.84.65', '.khoabubemi.click', 'khoabubemi.click', '127.0.0.1']
+ALLOWED_HOSTS = ['134.209.101.66', '127.0.0.1']
 
 
 # Application definition
@@ -94,12 +94,12 @@ WSGI_APPLICATION = 'tedisapp.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'mydatabase.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'mydatabase.sqlite3',
+#     }
+# }
 
 # DATABASES = {
 # 'default': {
@@ -147,7 +147,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, '/static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -157,7 +157,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Media
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, '/media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
 
 
 # CKEditor
