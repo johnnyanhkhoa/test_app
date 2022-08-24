@@ -6,6 +6,11 @@ from quotation.models import *
 from .models import *
 from django.contrib.admin.widgets import AdminSplitDateTime
 
+# YEARS
+years = []
+for year in range(2000,2050):
+    years.append(year)
+
 customers = Customer.objects.only('id')
 products = Product.objects.only('id')
 statuses = Status.objects.only('id')
@@ -21,9 +26,7 @@ class CreateQuotationForm(forms.ModelForm):
     quotation_no = forms.CharField(required=False, widget=forms.TextInput(attrs={
         "class": "form-control", "placeholder": "Quotation number",
     }))
-    quotation_date = forms.DateField(required=False, widget=forms.SelectDateWidget(attrs={
-         "placeholder": "Quotation date",
-    }))
+    quotation_date = forms.DateField(required=False, widget=forms.SelectDateWidget(years=years))
     quotation_remark = forms.CharField(required=False, widget=forms.TextInput(attrs={
         "class": "form-control", "placeholder": "Quotation remark",
     }))
@@ -35,9 +38,7 @@ class QuotationFollowupForm(forms.ModelForm):
     quotation_status = forms.ModelChoiceField(required=False, queryset=statuses ,widget=forms.Select(attrs={
         "class": "form-control bg-white", "placeholder": "Customer name",
     }))
-    status_date = forms.DateField(required=False, widget=forms.SelectDateWidget(attrs={
-         "placeholder": "Quotation date",
-    }))
+    status_date = forms.DateField(required=False, widget=forms.SelectDateWidget(years=years))
     class Meta:
         model = Quotation
         fields = ['quotation_status','status_date']
@@ -71,15 +72,9 @@ class CreateContractForm(forms.ModelForm):
     contract_no = forms.CharField(required=False, widget=forms.TextInput(attrs={
         "class": "form-control", "placeholder": "Contract number",
     }))
-    contract_date = forms.DateField(required=False, widget=forms.SelectDateWidget(attrs={
-         "placeholder": "Contract date",
-    }))
-    valid_from_date = forms.DateField(required=False, widget=forms.SelectDateWidget(attrs={
-         "placeholder": "Valid from date",
-    }))
-    valid_to_date = forms.DateField(required=False, widget=forms.SelectDateWidget(attrs={
-         "placeholder": "Valid to date",
-    }))
+    contract_date = forms.DateField(required=False, widget=forms.SelectDateWidget(years=years))
+    valid_from_date = forms.DateField(required=False, widget=forms.SelectDateWidget(years=years))
+    valid_to_date = forms.DateField(required=False, widget=forms.SelectDateWidget(years=years))
     placement_time_in_prior_to_delivery = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={
         "class": "form-control", "placeholder": "Placement time in prior to delivery",
     }))

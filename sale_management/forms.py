@@ -3,6 +3,10 @@ from django import forms
 from django.forms import ModelForm, TextInput
 from .models import *
 
+# YEARS
+years = []
+for year in range(2000,2050):
+    years.append(year)
 # Queryset
 customer_types = Customer_type.objects.only('id')
 channels = Channel.objects.only('id')
@@ -60,12 +64,8 @@ class CreateProductForm(forms.ModelForm):
     selling_price_otc_vat = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={
         "class": "form-control", "placeholder": "Selling price OTC(+VAT)",
     }))
-    registraion_approval_date = forms.DateField(required=False, widget=forms.SelectDateWidget(attrs={
-         "placeholder": "Registraion approval date",
-    }))
-    registraion_expiry_date = forms.DateField(required=False, widget=forms.SelectDateWidget(attrs={
-         "placeholder": "Registraion expiry date",
-    }))
+    registraion_approval_date = forms.DateField(required=False, widget=forms.SelectDateWidget(years=years))
+    registraion_expiry_date = forms.DateField(required=False, widget=forms.SelectDateWidget(years=years))
     registraion_reference = forms.CharField(strip=False, required=False, widget=forms.TextInput(attrs={
         "class": "form-control", "placeholder": "Registraion reference",
     }))
@@ -84,9 +84,7 @@ class CreateProductForm(forms.ModelForm):
     ingredient_list = forms.CharField(strip=False, required=False, widget=forms.TextInput(attrs={
         "class": "form-control", "placeholder": "Ingredient list",
     }))
-    expiry_date = forms.DateField(required=False, widget=forms.SelectDateWidget(attrs={
-         "placeholder": "Expiry date",
-    }))
+    expiry_date = forms.DateField(required=False, widget=forms.SelectDateWidget(years=years))
     product_remark = forms.CharField(strip=False, required=False, widget=forms.TextInput(attrs={
         "class": "form-control", "placeholder": "Product remark",
     }))
