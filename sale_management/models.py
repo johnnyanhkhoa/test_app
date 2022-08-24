@@ -57,7 +57,7 @@ class Product(models.Model):
     intended_use = models.CharField(max_length=500, null=True)
     product_type = models.CharField(max_length=500, null=True)
     ingredient_list = models.CharField(max_length=500, null=True)
-    expiry_date = models.CharField(max_length=50, null=True)
+    expiry_date = models.IntegerField(null=True)
     product_remark = models.TextField(null=True)
     created_by = models.IntegerField(null=True, blank=True)
     created_at = models.DateTimeField(null=True, default=now)
