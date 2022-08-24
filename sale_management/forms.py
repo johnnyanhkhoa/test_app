@@ -87,8 +87,8 @@ class CreateProductForm(forms.ModelForm):
     expiry_date = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={
         "class": "form-control", "placeholder": "Months",
     }))
-    product_remark = forms.CharField(strip=False, required=False, widget=forms.TextInput(attrs={
-        "class": "form-control", "placeholder": "Product remark",
+    product_remark = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={
+        "class": "form-control", "placeholder": "Months",
     }))
     class Meta:
         model = Product
