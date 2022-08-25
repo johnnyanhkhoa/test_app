@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-jm+ql@h^zhl#a+pjd$55-3ye@32ghe9e*)j$wahxu)sv7s=v!9
 DEBUG = True
 
 # ALLOWED_HOSTS = ['tedis-saleagreement.herokuapp.com', '127.0.0.1', 'localhost']
-ALLOWED_HOSTS = ['134.209.101.66', '127.0.0.1']
+ALLOWED_HOSTS = ['159.223.102.156', '127.0.0.1']
 
 
 # Application definition
@@ -107,7 +107,7 @@ DATABASES = {
     'NAME': 'myproject',
     'USER': 'myprojectuser',
     'PASSWORD': 'password',
-    'HOST': '134.209.101.66',
+    'HOST': '159.223.102.156',
     'PORT': '5432',
 }
 }
