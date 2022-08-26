@@ -104,9 +104,9 @@ def product1(request, pk):
     
     # Đọc danh sách sản phẩm theo Product_category
     if pk == 0:
-        products = Product.objects.order_by('-created_at')
+        products = Product.objects.order_by('created_at')
     else:
-        products = Product.objects.filter(product_category=pk).order_by('-created_at')
+        products = Product.objects.filter(product_category=pk).order_by('created_at')
         
     # Create product
     form_create_customer = CreateProductForm()
@@ -142,9 +142,9 @@ def product2(request, pk):
     
     # Đọc danh sách sản phẩm theo Product_category
     if pk == 0:
-        products = Product.objects.order_by('-created_at')
+        products = Product.objects.order_by('created_at')
     else:
-        products = Product.objects.filter(product_brand=pk).order_by('-created_at')
+        products = Product.objects.filter(product_brand=pk).order_by('created_at')
         
     # Create product
     form_create_customer = CreateProductForm()
@@ -192,7 +192,7 @@ def search_product(request):
     result_search = ''
     if request.GET.get('product_name'):
         keyword = request.GET.get('product_name')
-        products = Product.objects.filter(product_name__contains=keyword).order_by('-created_at')
+        products = Product.objects.filter(product_name__contains=keyword).order_by('created_at')
         
         # Phân trang
         page = request.GET.get('page', 1)
@@ -250,9 +250,9 @@ def customer_channel_filter(request, pk):
     
     # Đọc danh sách sản phẩm theo Channel
     if pk == 0:
-        customers = Customer.objects.order_by('-created_at')
+        customers = Customer.objects.order_by('created_at')
     else:
-        customers = Customer.objects.filter(channel=pk).order_by('-created_at')
+        customers = Customer.objects.filter(channel=pk).order_by('created_at')
 
     # Create customer
     form = CreateCustomerForm()
@@ -295,9 +295,9 @@ def customer_type_filter(request, pk):
     
     # Đọc danh sách sản phẩm theo Type
     if pk == 0:
-        customers = Customer.objects.order_by('-created_at')
+        customers = Customer.objects.order_by('created_at')
     else:
-        customers = Customer.objects.filter(customer_type=pk).order_by('-created_at')
+        customers = Customer.objects.filter(customer_type=pk).order_by('created_at')
 
     # Create customer
     form = CreateCustomerForm()
@@ -337,9 +337,9 @@ def customer_salearea_filter(request, pk):
     
     # Đọc danh sách sản phẩm theo Sale Area
     if pk == 0:
-        customers = Customer.objects.order_by('-created_at')
+        customers = Customer.objects.order_by('created_at')
     else:
-        customers = Customer.objects.filter(sale_area=pk).order_by('-created_at')
+        customers = Customer.objects.filter(sale_area=pk).order_by('created_at')
 
     # Create customer
     form = CreateCustomerForm()
@@ -379,9 +379,9 @@ def customer_province_filter(request, pk):
     
     # Đọc danh sách sản phẩm theo Province
     if pk == 0:
-        customers = Customer.objects.order_by('-created_at')
+        customers = Customer.objects.order_by('created_at')
     else:
-        customers = Customer.objects.filter(province=pk).order_by('-created_at')
+        customers = Customer.objects.filter(province=pk).order_by('created_at')
 
     # Creat Customer
     form = CreateCustomerForm()
@@ -426,7 +426,7 @@ def search_customer(request):
     result_search = ''
     if request.GET.get('customer_name'):
         keyword = request.GET.get('customer_name').upper()
-        customers = Customer.objects.filter(customer_name__contains=keyword).order_by('-created_at')
+        customers = Customer.objects.filter(customer_name__contains=keyword).order_by('created_at')
         print(customers)
         
         # Phân trang
