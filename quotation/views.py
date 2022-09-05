@@ -436,7 +436,13 @@ def search_contract(request):
         'list_status' : list_status,
         'contracts' : contract_pager,
     })
-    
+
+def contract_view(request, pk):
+    contract_info = Contract.objects.get(id = pk)
+    return render(request, 'quotation/contract_view.html', {
+        'contract_info' : contract_info,
+    })
+
 
 def contract_delete(request, pk):
     try:

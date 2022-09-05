@@ -14,6 +14,7 @@ urlpatterns = [
     path('quotation/<int:pk>/', views.final_quotation, name='final_quotation'),
     path('quotation_pdf/<int:pk>/', views.html_to_pdf_view, name='html_to_pdf_view'),
     path('contract/', views.contract, name='contract'),
+    path('contract_view/<int:pk>/', views.contract_view, name='contract_view'),
     path('contract-list-status/<int:pk>/', views.contract_list_status, name='contract_list_status'),
     path('contract-list-channel/<int:pk>/', views.contract_list_channel, name='contract_list_channel'),
     path('search_contract/', views.search_contract, name='search_contract'),

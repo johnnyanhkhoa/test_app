@@ -80,6 +80,7 @@
                       {% comment %} <li><a class="dropdown-item" href="{% url 'quotation:quotation_product_input' q.pk %}"><i class="bi bi-plus-square"></i> Add product to quotation</a></li> {% endcomment %}
                       {% comment %} <li><a class="dropdown-item" href="{% url 'quotation:final_quotation' q.pk %}"><i class="bi bi-plus-square"></i> Quotation</a></li> {% endcomment %}
                       {% comment %} <li><a class="dropdown-item" href="{% url 'quotation:html_to_pdf_view' q.pk %}"><i class="bi bi-plus-square"></i> Print PDF</a></li> {% endcomment %}
+                      <li><a class="dropdown-item" href="{% url 'quotation:contract_view' c.pk %}"><i class="bi bi-pencil-square"></i> View</a></li>
                       <li><a class="dropdown-item" href="{% url 'quotation:contract_update' c.pk %}"><i class="bi bi-pencil-fill"></i> Edit</a></li>
                       <li><a class="dropdown-item" href="{% url 'quotation:contract_delete' c.pk %}"><i style = "color: rgb(180, 28, 28);" class="bi bi-trash"></i> Delete</a></li>
                     </ul>
