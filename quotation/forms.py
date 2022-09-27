@@ -16,6 +16,9 @@ products = Product.objects.only('id')
 statuses = Status.objects.only('id')
 channels = Channel.objects.only('id')
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
 class CreateQuotationForm(forms.ModelForm):
     customer_id = forms.ModelChoiceField(required=False, queryset=customers ,widget=forms.Select(attrs={
         "class": "form-control bg-white", "placeholder": "Customer name",
@@ -26,7 +29,7 @@ class CreateQuotationForm(forms.ModelForm):
     quotation_no = forms.CharField(required=False, widget=forms.TextInput(attrs={
         "class": "form-control", "placeholder": "Quotation number",
     }))
-    quotation_date = forms.DateField(required=False, widget=forms.SelectDateWidget(years=years))
+    quotation_date = forms.DateField(required=False, widget=DateInput())
     quotation_remark = forms.CharField(required=False, widget=forms.TextInput(attrs={
         "class": "form-control", "placeholder": "Quotation remark",
     }))
